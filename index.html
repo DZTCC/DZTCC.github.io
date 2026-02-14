@@ -1,188 +1,130 @@
-<!--
-	此示例下载自 https://echarts.apache.org/examples/zh/editor.html?c=line-draggable
--->
 <!DOCTYPE html>
-<html lang="en" style="height: 100%">
+<html lang="zh-CN">
 <head>
-  <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2024年度市场趋势分析报告</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.8;
+        }
+        .container {
+            background-color: white;
+            padding: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 10px;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 15px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            font-size: 14px;
+        }
+        .section {
+            margin-bottom: 40px;
+        }
+        .section h2 {
+            color: #34495e;
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-left: 4px solid #3498db;
+            padding-left: 15px;
+        }
+        .content {
+            color: #555;
+            font-size: 16px;
+            text-indent: 2em;
+            margin-bottom: 20px;
+        }
+        .chart-container {
+            width: 100%;
+            height: 500px;
+            margin: 30px 0;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        .chart-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .chart-title {
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 10px;
+            font-style: italic;
+        }
+    </style>
 </head>
-<body style="height: 100%; margin: 0">
-  <div id="container" style="height: 100%"></div>
+<body>
+    <div class="container">
+        <h1>2024年度市场趋势分析报告</h1>
+        <div class="subtitle">数据分析部门 | 2024年12月</div>
 
-  
-  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
-  
-  <!-- Uncomment this line if you want to dataTool extension
-  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
-  -->
-  <!-- Uncomment this line if you want to use gl extension
-  <script type="text/javascript" src="https://echarts.apache.org/zh/js/vendors/echarts-gl/dist/echarts-gl.min.js"></script>
-  -->
-  <!-- Uncomment this line if you want to echarts-stat extension
-  <script type="text/javascript" src="https://echarts.apache.org/zh/js/vendors/echarts-stat/dist/ecStat.min.js"></script>
-  -->
-  <!-- Uncomment this line if you want to echarts-graph-modularity extension
-  <script type="text/javascript" src="https://echarts.apache.org/zh/js/vendors/echarts-graph-modularity/dist/echarts-graph-modularity.min.js"></script>
-  -->
-  <!-- Uncomment this line if you want to use map
-  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@4.9.0/map/js/world.js"></script>
-  -->
-  <!-- Uncomment these two lines if you want to use bmap extension
-  <script type="text/javascript" src="https://api.map.baidu.com/api?v=3.0&ak=YOUR_API_KEY"></script>
-  <script type="text/javascript" src="https://fastly.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
-  -->
+        <div class="section">
+            <h2>一、市场概况</h2>
+            <div class="content">
+                根据本年度的市场调研数据显示，整体市场呈现出稳步增长的态势。在经历了前三季度的波动调整后，第四季度市场信心逐步恢复，各项指标均显示出积极的发展信号。消费者购买力持续提升，市场需求结构也在不断优化升级。特别是在数字化转型的推动下，线上线下融合发展成为新的增长点，为市场注入了新的活力。
+            </div>
+            <div class="content">
+                从区域分布来看，一线城市依然保持领先地位，但二三线城市的增长速度更为迅猛，显示出巨大的市场潜力。行业竞争格局也在发生变化，创新型企业通过技术优势和服务升级，正在逐步改变传统的市场格局。
+            </div>
+        </div>
 
-  <script type="text/javascript">
-    var dom = document.getElementById('container');
-    var myChart = echarts.init(dom, null, {
-      renderer: 'canvas',
-      useDirtyRect: false
-    });
-    var app = {};
-    
-    var option;
+        <div class="section">
+            <h2>二、数据可视化分析</h2>
+            <div class="content">
+                为了更直观地展示市场变化趋势，我们采用了交互式图表进行数据呈现。下图展示了关键指标的动态变化情况，您可以通过拖拽数据点来观察不同场景下的数据表现。
+            </div>
+            
+            <div class="chart-container">
+                <iframe src="line-draggable (1).html"></iframe>
+            </div>
+            <div class="chart-title">图表1：市场指标动态趋势图（可拖拽交互）</div>
+        </div>
 
-    const symbolSize = 20;
-const data = [
-  [40, -10],
-  [-30, -5],
-  [-76.5, 20],
-  [-63.5, 40],
-  [-22.1, 50]
-];
-option = {
-  title: {
-    text: 'Try Dragging these Points',
-    left: 'center'
-  },
-  tooltip: {
-    triggerOn: 'none',
-    formatter: function (params) {
-      return (
-        'X: ' +
-        params.data[0].toFixed(2) +
-        '<br>Y: ' +
-        params.data[1].toFixed(2)
-      );
-    }
-  },
-  grid: {
-    top: '8%',
-    bottom: '12%'
-  },
-  xAxis: {
-    min: -100,
-    max: 70,
-    type: 'value',
-    axisLine: { onZero: false }
-  },
-  yAxis: {
-    min: -30,
-    max: 60,
-    type: 'value',
-    axisLine: { onZero: false }
-  },
-  dataZoom: [
-    {
-      type: 'slider',
-      xAxisIndex: 0,
-      filterMode: 'none'
-    },
-    {
-      type: 'slider',
-      yAxisIndex: 0,
-      filterMode: 'none'
-    },
-    {
-      type: 'inside',
-      xAxisIndex: 0,
-      filterMode: 'none'
-    },
-    {
-      type: 'inside',
-      yAxisIndex: 0,
-      filterMode: 'none'
-    }
-  ],
-  series: [
-    {
-      id: 'a',
-      type: 'line',
-      smooth: true,
-      symbolSize: symbolSize,
-      data: data
-    }
-  ]
-};
-setTimeout(function () {
-  // Add shadow circles (which is not visible) to enable drag.
-  myChart.setOption({
-    graphic: data.map(function (item, dataIndex) {
-      return {
-        type: 'circle',
-        position: myChart.convertToPixel('grid', item),
-        shape: {
-          cx: 0,
-          cy: 0,
-          r: symbolSize / 2
-        },
-        invisible: true,
-        draggable: true,
-        ondrag: function (dx, dy) {
-          onPointDragging(dataIndex, [this.x, this.y]);
-        },
-        onmousemove: function () {
-          showTooltip(dataIndex);
-        },
-        onmouseout: function () {
-          hideTooltip(dataIndex);
-        },
-        z: 100
-      };
-    })
-  });
-}, 0);
-window.addEventListener('resize', updatePosition);
-myChart.on('dataZoom', updatePosition);
-function updatePosition() {
-  myChart.setOption({
-    graphic: data.map(function (item, dataIndex) {
-      return {
-        position: myChart.convertToPixel('grid', item)
-      };
-    })
-  });
-}
-function showTooltip(dataIndex) {
-  myChart.dispatchAction({
-    type: 'showTip',
-    seriesIndex: 0,
-    dataIndex: dataIndex
-  });
-}
-function hideTooltip(dataIndex) {
-  myChart.dispatchAction({
-    type: 'hideTip'
-  });
-}
-function onPointDragging(dataIndex, pos) {
-  data[dataIndex] = myChart.convertFromPixel('grid', pos);
-  // Update data
-  myChart.setOption({
-    series: [
-      {
-        id: 'a',
-        data: data
-      }
-    ]
-  });
-}
+        <div class="section">
+            <h2>三、深度解读</h2>
+            <div class="content">
+                通过对上述数据的深入分析，我们发现市场发展呈现出几个显著特征。首先，用户需求日益多元化，个性化定制服务成为新的竞争焦点。其次，技术创新驱动效应明显，人工智能、大数据等新技术的应用正在重塑行业生态。第三，可持续发展理念深入人心，绿色环保产品受到越来越多消费者的青睐。
+            </div>
+            <div class="content">
+                从风险角度来看，市场仍面临一些不确定因素。国际经济形势的复杂多变、原材料价格波动、以及监管政策的调整都可能对市场产生影响。因此，企业需要保持敏锐的市场洞察力，及时调整战略布局，以应对各种挑战。
+            </div>
+            <div class="content">
+                值得注意的是，消费者行为模式正在发生深刻变化。年轻一代消费者更加注重品牌价值观和社会责任，他们的消费决策不仅基于产品本身，更看重品牌所传递的文化和理念。这要求企业在产品开发和营销策略上进行相应调整，以更好地满足新时代消费者的需求。
+            </div>
 
-    if (option && typeof option === 'object') {
-      myChart.setOption(option);
-    }
+            <div class="chart-container">
+                <iframe src="line-draggable.html"></iframe>
+            </div>
+            <div class="chart-title">图表2：辅助分析数据趋势图（可拖拽交互）</div>
+        </div>
 
-    window.addEventListener('resize', myChart.resize);
-  </script>
+        <div class="section">
+            <h2>四、未来展望</h2>
+            <div class="content">
+                展望未来，我们对市场发展保持谨慎乐观的态度。随着经济结构的持续优化和消费升级的深入推进，市场将迎来新的发展机遇。建议企业加强技术研发投入，提升产品和服务质量，同时注重品牌建设和用户体验优化。只有不断创新、积极应变，才能在激烈的市场竞争中立于不败之地。
+            </div>
+            <div class="content">
+                我们将持续关注市场动态，定期更新分析报告，为决策提供数据支持和专业建议。期待与各方携手共进，共同推动行业健康可持续发展。
+            </div>
+        </div>
+    </div>
 </body>
 </html>
