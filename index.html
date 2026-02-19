@@ -3,128 +3,998 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2024年度市场趋势分析报告</title>
+    <title>电商数据仪表盘</title>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Microsoft YaHei', Arial, sans-serif;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f5f5f5;
-            line-height: 1.8;
-        }
-        .container {
-            background-color: white;
-            padding: 40px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            border-radius: 8px;
-        }
-        h1 {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: #fafbfc;
             color: #2c3e50;
-            text-align: center;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #ff9a76 0%, #ff6b9d 100%);
+            color: white;
+            padding: 32px 48px;
+            box-shadow: 0 2px 20px rgba(255, 107, 157, 0.15);
+        }
+
+        .header h1 {
             font-size: 32px;
-            margin-bottom: 10px;
-            border-bottom: 3px solid #3498db;
-            padding-bottom: 15px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
         }
-        .subtitle {
-            text-align: center;
-            color: #7f8c8d;
-            margin-bottom: 40px;
+
+        .header p {
+            margin-top: 8px;
+            opacity: 0.92;
             font-size: 14px;
+            font-weight: 300;
         }
-        .section {
-            margin-bottom: 40px;
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 32px 48px;
         }
-        .section h2 {
-            color: #34495e;
-            font-size: 24px;
-            margin-bottom: 20px;
-            border-left: 4px solid #3498db;
-            padding-left: 15px;
+
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            background: white;
+            padding: 6px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            width: fit-content;
         }
-        .content {
-            color: #555;
-            font-size: 16px;
-            text-indent: 2em;
-            margin-bottom: 20px;
-        }
-        .chart-container {
-            width: 100%;
-            height: 500px;
-            margin: 30px 0;
-            border: 1px solid #e0e0e0;
-            border-radius: 5px;
-            overflow: hidden;
-        }
-        .chart-container iframe {
-            width: 100%;
-            height: 100%;
+
+        .tab {
+            padding: 10px 28px;
+            cursor: pointer;
             border: none;
+            background: transparent;
+            font-size: 15px;
+            font-weight: 400;
+            color: #6b7280;
+            border-radius: 8px;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        .tab:hover {
+            background: #fef3f2;
+            color: #ff6b9d;
+        }
+
+        .tab.active {
+            background: linear-gradient(135deg, #ff9a76 0%, #ff6b9d 100%);
+            color: white;
+            box-shadow: 0 2px 8px rgba(255, 107, 157, 0.25);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-bottom: 32px;
+        }
+
+        .metric-card {
+            background: white;
+            padding: 28px 24px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .metric-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(255, 107, 157, 0.08);
+            border-color: #ffe4e6;
+        }
+
+        .metric-label {
+            font-size: 13px;
+            color: #9ca3af;
+            margin-bottom: 12px;
+            font-weight: 400;
+            letter-spacing: 0.3px;
+        }
+
+        .metric-value {
+            font-size: 36px;
+            font-weight: 300;
+            color: #1f2937;
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+        }
+
+        .metric-change {
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 400;
+        }
+
+        .metric-change.positive {
+            color: #ff9a76;
+        }
+
+        .metric-change.negative {
+            color: #94a3b8;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 32px 28px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            border: 1px solid #f0f0f0;
+            margin-bottom: 24px;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 28px;
+        }
+
         .chart-title {
-            text-align: center;
-            color: #7f8c8d;
+            font-size: 17px;
+            font-weight: 400;
+            color: #374151;
+            letter-spacing: 0.2px;
+        }
+
+        .chart-controls {
+            display: flex;
+            gap: 8px;
+            background: #f9fafb;
+            padding: 4px;
+            border-radius: 10px;
+        }
+
+        .chart-btn {
+            padding: 7px 18px;
+            border: none;
+            background: transparent;
+            border-radius: 7px;
+            cursor: pointer;
+            font-size: 13px;
+            color: #6b7280;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 400;
+        }
+
+        .chart-btn:hover {
+            background: white;
+            color: #ff6b9d;
+        }
+
+        .chart-btn.active {
+            background: linear-gradient(135deg, #ff9a76 0%, #ff6b9d 100%);
+            color: white;
+            box-shadow: 0 2px 6px rgba(255, 107, 157, 0.2);
+        }
+
+        .chart {
+            width: 100%;
+            height: 380px;
+        }
+
+        .store-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 24px;
+        }
+
+        .store-card {
+            background: white;
+            padding: 28px 24px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            border: 1px solid #f0f0f0;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .store-card:hover {
+            box-shadow: 0 8px 24px rgba(255, 107, 157, 0.08);
+            border-color: #ffe4e6;
+        }
+
+        .store-name {
+            font-size: 19px;
+            font-weight: 400;
+            margin-bottom: 20px;
+            color: #1f2937;
+            border-bottom: 1px solid #f0f0f0;
+            padding-bottom: 12px;
+            letter-spacing: 0.3px;
+        }
+
+        .store-metrics {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .store-note {
+            background: #fef3f2;
+            padding: 16px;
+            border-radius: 12px;
+            font-size: 13px;
+            color: #64748b;
+            border-left: 3px solid #ff9a76;
+            line-height: 1.7;
+        }
+
+        .product-table-container {
+            background: white;
+            padding: 32px 28px;
+            border-radius: 16px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+            border: 1px solid #f0f0f0;
+            overflow-x: auto;
+        }
+
+        .product-table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 1200px;
+        }
+
+        .product-table th {
+            background: #fafbfc;
+            padding: 14px 16px;
+            text-align: left;
+            font-weight: 400;
+            color: #6b7280;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            user-select: none;
+            position: relative;
+            font-size: 13px;
+            letter-spacing: 0.3px;
+        }
+
+        .product-table th:hover {
+            background: #fef3f2;
+            color: #ff6b9d;
+        }
+
+        .product-table th::after {
+            content: '⇅';
+            position: absolute;
+            right: 12px;
+            opacity: 0.2;
+            font-size: 12px;
+        }
+
+        .product-table th.sorted-asc::after {
+            content: '↑';
+            opacity: 1;
+            color: #ff9a76;
+        }
+
+        .product-table th.sorted-desc::after {
+            content: '↓';
+            opacity: 1;
+            color: #ff9a76;
+        }
+
+        .product-table td {
+            padding: 16px;
+            border-bottom: 1px solid #f9fafb;
             font-size: 14px;
-            margin-top: 10px;
-            font-style: italic;
+        }
+
+        .product-table tr:hover {
+            background: #fefefe;
+        }
+
+        .product-name {
+            font-weight: 400;
+            color: #1f2937;
+        }
+
+        .number-cell {
+            text-align: right;
+            font-family: 'SF Mono', 'Consolas', monospace;
+            color: #4b5563;
+            font-size: 13px;
+        }
+
+        .percentage-cell {
+            text-align: right;
+            color: #ff9a76;
+            font-weight: 400;
+        }
+
+        .mode-toggle {
+            margin-bottom: 0;
         }
     </style>
 </head>
 <body>
+    <div class="header">
+        <h1>电商数据仪表盘</h1>
+        <p>实时监控销售数据 · 最后更新: <span id="lastUpdate"></span></p>
+    </div>
+
     <div class="container">
-        <h1>2024年度市场趋势分析报告</h1>
-        <div class="subtitle">数据分析部门 | 2024年12月</div>
-
-        <div class="section">
-            <h2>一、市场概况</h2>
-            <div class="content">
-                根据本年度的市场调研数据显示，整体市场呈现出稳步增长的态势。在经历了前三季度的波动调整后，第四季度市场信心逐步恢复，各项指标均显示出积极的发展信号。消费者购买力持续提升，市场需求结构也在不断优化升级。特别是在数字化转型的推动下，线上线下融合发展成为新的增长点，为市场注入了新的活力。
-            </div>
-            <div class="content">
-                从区域分布来看，一线城市依然保持领先地位，但二三线城市的增长速度更为迅猛，显示出巨大的市场潜力。行业竞争格局也在发生变化，创新型企业通过技术优势和服务升级，正在逐步改变传统的市场格局。
-            </div>
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('overview')">总览</button>
+            <button class="tab" onclick="switchTab('stores')">店铺</button>
+            <button class="tab" onclick="switchTab('products')">商品</button>
         </div>
 
-        <div class="section">
-            <h2>二、数据可视化分析</h2>
-            <div class="content">
-                为了更直观地展示市场变化趋势，我们采用了交互式图表进行数据呈现。下图展示了关键指标的动态变化情况，您可以通过拖拽数据点来观察不同场景下的数据表现。
-            </div>
-            
-            <div class="chart-container">
-                <iframe src="line-draggable (1).html"></iframe>
-            </div>
-            <div class="chart-title">图表1：市场指标动态趋势图（可拖拽交互）</div>
-        </div>
-
-        <div class="section">
-            <h2>三、深度解读</h2>
-            <div class="content">
-                通过对上述数据的深入分析，我们发现市场发展呈现出几个显著特征。首先，用户需求日益多元化，个性化定制服务成为新的竞争焦点。其次，技术创新驱动效应明显，人工智能、大数据等新技术的应用正在重塑行业生态。第三，可持续发展理念深入人心，绿色环保产品受到越来越多消费者的青睐。
-            </div>
-            <div class="content">
-                从风险角度来看，市场仍面临一些不确定因素。国际经济形势的复杂多变、原材料价格波动、以及监管政策的调整都可能对市场产生影响。因此，企业需要保持敏锐的市场洞察力，及时调整战略布局，以应对各种挑战。
-            </div>
-            <div class="content">
-                值得注意的是，消费者行为模式正在发生深刻变化。年轻一代消费者更加注重品牌价值观和社会责任，他们的消费决策不仅基于产品本身，更看重品牌所传递的文化和理念。这要求企业在产品开发和营销策略上进行相应调整，以更好地满足新时代消费者的需求。
+        <!-- 总览标签页 -->
+        <div id="overview" class="tab-content active">
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-label">月至今实际成交</div>
+                    <div class="metric-value">¥2,458,600</div>
+                    <div class="metric-change positive">
+                        <span>↑ 18.5%</span>
+                        <span style="color: #888;">同比增长</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">当月预估值</div>
+                    <div class="metric-value">¥3,850,000</div>
+                    <div class="metric-change" style="color: #888;">
+                        <span>基于当前趋势</span>
+                    </div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-label">平均折扣率</div>
+                    <div class="metric-value">78.5%</div>
+                    <div class="metric-change negative">
+                        <span>↓ 2.3%</span>
+                        <span style="color: #888;">环比下降</span>
+                    </div>
+                </div>
             </div>
 
             <div class="chart-container">
-                <iframe src="line-draggable.html"></iframe>
+                <div class="chart-header">
+                    <div class="chart-title">全渠道销售趋势</div>
+                    <div class="chart-controls">
+                        <button class="chart-btn active" onclick="changeSalesRange('30days')">近30天</button>
+                        <button class="chart-btn" onclick="changeSalesRange('1year')">近1年</button>
+                    </div>
+                </div>
+                <div id="salesChart" class="chart"></div>
             </div>
-            <div class="chart-title">图表2：辅助分析数据趋势图（可拖拽交互）</div>
+
+            <div class="chart-container">
+                <div class="chart-header">
+                    <div class="chart-title">各渠道占比变化</div>
+                </div>
+                <div id="channelChart" class="chart"></div>
+            </div>
         </div>
 
-        <div class="section">
-            <h2>四、未来展望</h2>
-            <div class="content">
-                展望未来，我们对市场发展保持谨慎乐观的态度。随着经济结构的持续优化和消费升级的深入推进，市场将迎来新的发展机遇。建议企业加强技术研发投入，提升产品和服务质量，同时注重品牌建设和用户体验优化。只有不断创新、积极应变，才能在激烈的市场竞争中立于不败之地。
-            </div>
-            <div class="content">
-                我们将持续关注市场动态，定期更新分析报告，为决策提供数据支持和专业建议。期待与各方携手共进，共同推动行业健康可持续发展。
+        <!-- 店铺标签页 -->
+        <div id="stores" class="tab-content">
+            <div class="store-grid" id="storeGrid"></div>
+        </div>
+
+        <!-- 商品标签页 -->
+        <div id="products" class="tab-content">
+            <div class="product-table-container">
+                <div class="chart-header mode-toggle">
+                    <div class="chart-title">商品销售一览</div>
+                    <div class="chart-controls">
+                        <button class="chart-btn active" onclick="changeProductMode('amount')">销售金额</button>
+                        <button class="chart-btn" onclick="changeProductMode('quantity')">销售件数</button>
+                    </div>
+                </div>
+                <table class="product-table" id="productTable">
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable(0)">商品名称</th>
+                            <th onclick="sortTable(1)">京东</th>
+                            <th onclick="sortTable(2)">天猫</th>
+                            <th onclick="sortTable(3)">拼多多</th>
+                            <th onclick="sortTable(4)">抖音</th>
+                            <th onclick="sortTable(5)">总计</th>
+                            <th onclick="sortTable(6)">库存</th>
+                            <th onclick="sortTable(7)">周转天数</th>
+                            <th onclick="sortTable(8)">退货</th>
+                            <th onclick="sortTable(9)">退货率</th>
+                            <th onclick="sortTable(10)">京东占比</th>
+                            <th onclick="sortTable(11)">天猫占比</th>
+                        </tr>
+                    </thead>
+                    <tbody id="productTableBody"></tbody>
+                </table>
             </div>
         </div>
     </div>
+
+    <script>
+        // 模拟数据
+        const mockData = {
+            // 近30天日销售数据
+            daily30: {
+                dates: generateDates(30),
+                jd: generateRandomArray(30, 15000, 35000),
+                tmall: generateRandomArray(30, 12000, 28000),
+                pdd: generateRandomArray(30, 8000, 20000),
+                douyin: generateRandomArray(30, 5000, 15000)
+            },
+            // 近1年月销售数据
+            monthly12: {
+                months: ['2025-03', '2025-04', '2025-05', '2025-06', '2025-07', '2025-08', '2025-09', '2025-10', '2025-11', '2025-12', '2026-01', '2026-02'],
+                jd: [580000, 620000, 680000, 720000, 650000, 690000, 750000, 780000, 820000, 880000, 750000, 520000],
+                tmall: [480000, 510000, 550000, 590000, 520000, 560000, 610000, 640000, 680000, 720000, 620000, 430000],
+                pdd: [320000, 350000, 380000, 410000, 370000, 390000, 430000, 460000, 490000, 520000, 450000, 310000],
+                douyin: [180000, 200000, 220000, 240000, 210000, 230000, 260000, 280000, 310000, 340000, 290000, 200000]
+            },
+            // 店铺数据
+            stores: [
+                {
+                    name: '京东自营旗舰店',
+                    monthSales: 520000,
+                    yoyGrowth: 18.5,
+                    lastYearSame: 438983,
+                    forecast: 815000,
+                    promotionRate: 12.3,
+                    discountRate: 76.8,
+                    note: '本月618大促活动效果显著，转化率提升明显。建议继续加大爆款商品推广力度。'
+                },
+                {
+                    name: '天猫旗舰店',
+                    monthSales: 430000,
+                    yoyGrowth: 15.2,
+                    lastYearSame: 373265,
+                    forecast: 675000,
+                    promotionRate: 15.6,
+                    discountRate: 79.2,
+                    note: '直通车投放ROI稳定在1:4.2，超级推荐表现良好。需关注竞品价格变化。'
+                },
+                {
+                    name: '拼多多旗舰店',
+                    monthSales: 310000,
+                    yoyGrowth: 22.8,
+                    lastYearSame: 252439,
+                    forecast: 486000,
+                    promotionRate: 18.9,
+                    discountRate: 82.5,
+                    note: '多多进宝推广效果突出，新客占比达45%。建议优化商品主图和详情页。'
+                },
+                {
+                    name: '抖音小店',
+                    monthSales: 200000,
+                    yoyGrowth: 35.6,
+                    lastYearSame: 147493,
+                    forecast: 314000,
+                    promotionRate: 22.4,
+                    discountRate: 75.3,
+                    note: '短视频带货转化率高，达人合作效果好。需要持续产出优质内容。'
+                }
+            ],
+            // 商品数据
+            products: [
+                {
+                    name: '智能手环Pro',
+                    jd: { amount: 125000, quantity: 625 },
+                    tmall: { amount: 98000, quantity: 490 },
+                    pdd: { amount: 72000, quantity: 360 },
+                    douyin: { amount: 45000, quantity: 225 },
+                    inventory: 1200,
+                    returns: { amount: 8500, quantity: 43 }
+                },
+                {
+                    name: '无线蓝牙耳机',
+                    jd: { amount: 156000, quantity: 1300 },
+                    tmall: { amount: 132000, quantity: 1100 },
+                    pdd: { amount: 108000, quantity: 900 },
+                    douyin: { amount: 84000, quantity: 700 },
+                    inventory: 2500,
+                    returns: { amount: 12000, quantity: 100 }
+                },
+                {
+                    name: '智能音箱',
+                    jd: { amount: 89000, quantity: 356 },
+                    tmall: { amount: 76000, quantity: 304 },
+                    pdd: { amount: 58000, quantity: 232 },
+                    douyin: { amount: 42000, quantity: 168 },
+                    inventory: 800,
+                    returns: { amount: 6500, quantity: 26 }
+                },
+                {
+                    name: '运动手表',
+                    jd: { amount: 98000, quantity: 280 },
+                    tmall: { amount: 87000, quantity: 248 },
+                    pdd: { amount: 52000, quantity: 148 },
+                    douyin: { amount: 35000, quantity: 100 },
+                    inventory: 450,
+                    returns: { amount: 7200, quantity: 21 }
+                },
+                {
+                    name: '充电宝20000mAh',
+                    jd: { amount: 52000, quantity: 650 },
+                    tmall: { amount: 37000, quantity: 462 },
+                    pdd: { amount: 20000, quantity: 250 },
+                    douyin: { amount: 14000, quantity: 175 },
+                    inventory: 1800,
+                    returns: { amount: 3100, quantity: 39 }
+                }
+            ]
+        };
+
+        let currentSalesRange = '30days';
+        let currentProductMode = 'amount';
+        let sortColumn = -1;
+        let sortAscending = true;
+
+        // 工具函数
+        function generateDates(days) {
+            const dates = [];
+            const today = new Date();
+            for (let i = days - 1; i >= 0; i--) {
+                const date = new Date(today);
+                date.setDate(date.getDate() - i);
+                dates.push(`${date.getMonth() + 1}/${date.getDate()}`);
+            }
+            return dates;
+        }
+
+        function generateRandomArray(length, min, max) {
+            return Array.from({ length }, () => Math.floor(Math.random() * (max - min) + min));
+        }
+
+        function formatNumber(num) {
+            return num.toLocaleString('zh-CN');
+        }
+
+        function formatCurrency(num) {
+            return '¥' + formatNumber(num);
+        }
+
+        // 更新最后更新时间
+        function updateLastUpdateTime() {
+            const now = new Date();
+            document.getElementById('lastUpdate').textContent = 
+                `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')} ${String(now.getHours()).padStart(2, '0')}:${String(now.getMinutes()).padStart(2, '0')}`;
+        }
+
+        // 标签页切换
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // 销售趋势图
+        function initSalesChart() {
+            const chart = echarts.init(document.getElementById('salesChart'));
+            updateSalesChart(chart);
+        }
+
+        function updateSalesChart(chart) {
+            const data = currentSalesRange === '30days' ? mockData.daily30 : mockData.monthly12;
+            const xAxisData = currentSalesRange === '30days' ? data.dates : data.months;
+            
+            const option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'cross' }
+                },
+                legend: {
+                    data: ['京东', '天猫', '拼多多', '抖音'],
+                    top: 0
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    boundaryGap: false,
+                    data: xAxisData
+                },
+                yAxis: {
+                    type: 'value',
+                    axisLabel: {
+                        formatter: value => '¥' + (value / 1000).toFixed(0) + 'k'
+                    }
+                },
+                series: [
+                    {
+                        name: '京东',
+                        type: 'line',
+                        smooth: true,
+                        data: data.jd,
+                        itemStyle: { color: '#E3393C' }
+                    },
+                    {
+                        name: '天猫',
+                        type: 'line',
+                        smooth: true,
+                        data: data.tmall,
+                        itemStyle: { color: '#FF6A00' }
+                    },
+                    {
+                        name: '拼多多',
+                        type: 'line',
+                        smooth: true,
+                        data: data.pdd,
+                        itemStyle: { color: '#E02E24' }
+                    },
+                    {
+                        name: '抖音',
+                        type: 'line',
+                        smooth: true,
+                        data: data.douyin,
+                        itemStyle: { color: '#000000' }
+                    }
+                ]
+            };
+            
+            chart.setOption(option);
+        }
+
+        function changeSalesRange(range) {
+            currentSalesRange = range;
+            document.querySelectorAll('.chart-controls .chart-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            const chart = echarts.getInstanceByDom(document.getElementById('salesChart'));
+            updateSalesChart(chart);
+        }
+
+        // 渠道占比图
+        function initChannelChart() {
+            const chart = echarts.init(document.getElementById('channelChart'));
+            
+            const months = mockData.monthly12.months.slice(-6);
+            const data = months.map((month, i) => {
+                const idx = mockData.monthly12.months.length - 6 + i;
+                const total = mockData.monthly12.jd[idx] + mockData.monthly12.tmall[idx] + 
+                             mockData.monthly12.pdd[idx] + mockData.monthly12.douyin[idx];
+                return {
+                    jd: (mockData.monthly12.jd[idx] / total * 100).toFixed(1),
+                    tmall: (mockData.monthly12.tmall[idx] / total * 100).toFixed(1),
+                    pdd: (mockData.monthly12.pdd[idx] / total * 100).toFixed(1),
+                    douyin: (mockData.monthly12.douyin[idx] / total * 100).toFixed(1)
+                };
+            });
+            
+            const option = {
+                tooltip: {
+                    trigger: 'axis',
+                    axisPointer: { type: 'shadow' },
+                    formatter: params => {
+                        let result = params[0].name + '<br/>';
+                        params.forEach(item => {
+                            result += `${item.marker}${item.seriesName}: ${item.value}%<br/>`;
+                        });
+                        return result;
+                    }
+                },
+                legend: {
+                    data: ['京东', '天猫', '拼多多', '抖音']
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: {
+                    type: 'category',
+                    data: months
+                },
+                yAxis: {
+                    type: 'value',
+                    max: 100,
+                    axisLabel: {
+                        formatter: '{value}%'
+                    }
+                },
+                series: [
+                    {
+                        name: '京东',
+                        type: 'bar',
+                        stack: 'total',
+                        data: data.map(d => d.jd),
+                        itemStyle: { color: '#E3393C' }
+                    },
+                    {
+                        name: '天猫',
+                        type: 'bar',
+                        stack: 'total',
+                        data: data.map(d => d.tmall),
+                        itemStyle: { color: '#FF6A00' }
+                    },
+                    {
+                        name: '拼多多',
+                        type: 'bar',
+                        stack: 'total',
+                        data: data.map(d => d.pdd),
+                        itemStyle: { color: '#E02E24' }
+                    },
+                    {
+                        name: '抖音',
+                        type: 'bar',
+                        stack: 'total',
+                        data: data.map(d => d.douyin),
+                        itemStyle: { color: '#000000' }
+                    }
+                ]
+            };
+            
+            chart.setOption(option);
+        }
+
+        // 店铺卡片
+        function initStoreCards() {
+            const container = document.getElementById('storeGrid');
+            
+            mockData.stores.forEach(store => {
+                const card = document.createElement('div');
+                card.className = 'store-card';
+                
+                const changeClass = store.yoyGrowth >= 0 ? 'positive' : 'negative';
+                const changeSymbol = store.yoyGrowth >= 0 ? '↑' : '↓';
+                
+                card.innerHTML = `
+                    <div class="store-name">${store.name}</div>
+                    <div class="store-metrics">
+                        <div class="metric-card" style="margin: 0;">
+                            <div class="metric-label">月至今成交</div>
+                            <div class="metric-value" style="font-size: 24px;">${formatCurrency(store.monthSales)}</div>
+                        </div>
+                        <div class="metric-card" style="margin: 0;">
+                            <div class="metric-label">同比增幅</div>
+                            <div class="metric-value ${changeClass}" style="font-size: 24px;">${changeSymbol} ${Math.abs(store.yoyGrowth)}%</div>
+                        </div>
+                        <div class="metric-card" style="margin: 0;">
+                            <div class="metric-label">去年同期</div>
+                            <div class="metric-value" style="font-size: 20px;">${formatCurrency(store.lastYearSame)}</div>
+                        </div>
+                        <div class="metric-card" style="margin: 0;">
+                            <div class="metric-label">当月预估</div>
+                            <div class="metric-value" style="font-size: 20px;">${formatCurrency(store.forecast)}</div>
+                        </div>
+                        <div class="metric-card" style="margin: 0;">
+                            <div class="metric-label">推广费率</div>
+                            <div class="metric-value" style="font-size: 20px;">${store.promotionRate}%</div>
+                        </div>
+                        <div class="metric-card" style="margin: 0;">
+                            <div class="metric-label">折扣率</div>
+                            <div class="metric-value" style="font-size: 20px;">${store.discountRate}%</div>
+                        </div>
+                    </div>
+                    <div class="store-note">
+                        <strong>备注：</strong>${store.note}
+                    </div>
+                `;
+                
+                container.appendChild(card);
+                
+                // 为每个店铺创建销售曲线图
+                const chartDiv = document.createElement('div');
+                chartDiv.className = 'chart';
+                chartDiv.style.marginTop = '15px';
+                card.insertBefore(chartDiv, card.querySelector('.store-note'));
+                
+                const chart = echarts.init(chartDiv);
+                const storeIndex = mockData.stores.indexOf(store);
+                const thisYear = mockData.monthly12.months.map((m, i) => {
+                    if (storeIndex === 0) return mockData.monthly12.jd[i];
+                    if (storeIndex === 1) return mockData.monthly12.tmall[i];
+                    if (storeIndex === 2) return mockData.monthly12.pdd[i];
+                    return mockData.monthly12.douyin[i];
+                });
+                const lastYear = thisYear.map(v => v / (1 + store.yoyGrowth / 100));
+                
+                const option = {
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: { type: 'cross' }
+                    },
+                    legend: {
+                        data: ['今年', '去年'],
+                        top: 0
+                    },
+                    grid: {
+                        left: '3%',
+                        right: '4%',
+                        bottom: '3%',
+                        containLabel: true
+                    },
+                    xAxis: {
+                        type: 'category',
+                        data: mockData.monthly12.months
+                    },
+                    yAxis: {
+                        type: 'value',
+                        axisLabel: {
+                            formatter: value => '¥' + (value / 1000).toFixed(0) + 'k'
+                        }
+                    },
+                    series: [
+                        {
+                            name: '今年',
+                            type: 'line',
+                            smooth: true,
+                            data: thisYear,
+                            itemStyle: { color: '#667eea' }
+                        },
+                        {
+                            name: '去年',
+                            type: 'line',
+                            smooth: true,
+                            data: lastYear,
+                            itemStyle: { color: '#cccccc' },
+                            lineStyle: { type: 'dashed' }
+                        }
+                    ]
+                };
+                
+                chart.setOption(option);
+            });
+        }
+
+        // 商品表格
+        function initProductTable() {
+            renderProductTable();
+        }
+
+        function renderProductTable() {
+            const tbody = document.getElementById('productTableBody');
+            tbody.innerHTML = '';
+            
+            mockData.products.forEach(product => {
+                const total = product.jd[currentProductMode] + product.tmall[currentProductMode] + 
+                             product.pdd[currentProductMode] + product.douyin[currentProductMode];
+                const totalQty = product.jd.quantity + product.tmall.quantity + 
+                                product.pdd.quantity + product.douyin.quantity;
+                const turnoverDays = (product.inventory / totalQty * 30).toFixed(1);
+                const returnRate = (product.returns.quantity / totalQty * 100).toFixed(2);
+                const jdPenetration = (product.jd[currentProductMode] / total * 100).toFixed(1);
+                const tmallPenetration = (product.tmall[currentProductMode] / total * 100).toFixed(1);
+                
+                const row = document.createElement('tr');
+                
+                if (currentProductMode === 'amount') {
+                    row.innerHTML = `
+                        <td class="product-name">${product.name}</td>
+                        <td class="number-cell">${formatCurrency(product.jd.amount)}</td>
+                        <td class="number-cell">${formatCurrency(product.tmall.amount)}</td>
+                        <td class="number-cell">${formatCurrency(product.pdd.amount)}</td>
+                        <td class="number-cell">${formatCurrency(product.douyin.amount)}</td>
+                        <td class="number-cell"><strong>${formatCurrency(total)}</strong></td>
+                        <td class="number-cell">${formatNumber(product.inventory)}</td>
+                        <td class="number-cell">${turnoverDays}</td>
+                        <td class="number-cell">${formatCurrency(product.returns.amount)}</td>
+                        <td class="percentage-cell">${returnRate}%</td>
+                        <td class="percentage-cell">${jdPenetration}%</td>
+                        <td class="percentage-cell">${tmallPenetration}%</td>
+                    `;
+                } else {
+                    row.innerHTML = `
+                        <td class="product-name">${product.name}</td>
+                        <td class="number-cell">${formatNumber(product.jd.quantity)}</td>
+                        <td class="number-cell">${formatNumber(product.tmall.quantity)}</td>
+                        <td class="number-cell">${formatNumber(product.pdd.quantity)}</td>
+                        <td class="number-cell">${formatNumber(product.douyin.quantity)}</td>
+                        <td class="number-cell"><strong>${formatNumber(totalQty)}</strong></td>
+                        <td class="number-cell">${formatNumber(product.inventory)}</td>
+                        <td class="number-cell">${turnoverDays}</td>
+                        <td class="number-cell">${formatNumber(product.returns.quantity)}</td>
+                        <td class="percentage-cell">${returnRate}%</td>
+                        <td class="percentage-cell">${jdPenetration}%</td>
+                        <td class="percentage-cell">${tmallPenetration}%</td>
+                    `;
+                }
+                
+                tbody.appendChild(row);
+            });
+        }
+
+        function changeProductMode(mode) {
+            currentProductMode = mode;
+            document.querySelectorAll('.mode-toggle .chart-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            renderProductTable();
+        }
+
+        function sortTable(columnIndex) {
+            const table = document.getElementById('productTable');
+            const tbody = table.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            
+            // 更新排序状态
+            if (sortColumn === columnIndex) {
+                sortAscending = !sortAscending;
+            } else {
+                sortColumn = columnIndex;
+                sortAscending = true;
+            }
+            
+            // 更新表头样式
+            table.querySelectorAll('th').forEach((th, i) => {
+                th.classList.remove('sorted-asc', 'sorted-desc');
+                if (i === columnIndex) {
+                    th.classList.add(sortAscending ? 'sorted-asc' : 'sorted-desc');
+                }
+            });
+            
+            // 排序
+            rows.sort((a, b) => {
+                let aValue = a.cells[columnIndex].textContent;
+                let bValue = b.cells[columnIndex].textContent;
+                
+                // 移除货币符号和逗号
+                aValue = aValue.replace(/[¥,]/g, '').replace('%', '');
+                bValue = bValue.replace(/[¥,]/g, '').replace('%', '');
+                
+                // 尝试转换为数字
+                const aNum = parseFloat(aValue);
+                const bNum = parseFloat(bValue);
+                
+                if (!isNaN(aNum) && !isNaN(bNum)) {
+                    return sortAscending ? aNum - bNum : bNum - aNum;
+                } else {
+                    return sortAscending ? 
+                        aValue.localeCompare(bValue, 'zh-CN') : 
+                        bValue.localeCompare(aValue, 'zh-CN');
+                }
+            });
+            
+            // 重新插入排序后的行
+            rows.forEach(row => tbody.appendChild(row));
+        }
+
+        // 初始化
+        window.addEventListener('load', () => {
+            updateLastUpdateTime();
+            initSalesChart();
+            initChannelChart();
+            initStoreCards();
+            initProductTable();
+            
+            // 响应式图表
+            window.addEventListener('resize', () => {
+                echarts.getInstanceByDom(document.getElementById('salesChart'))?.resize();
+                echarts.getInstanceByDom(document.getElementById('channelChart'))?.resize();
+                document.querySelectorAll('.store-card .chart').forEach(chartDiv => {
+                    echarts.getInstanceByDom(chartDiv)?.resize();
+                });
+            });
+        });
+    </script>
 </body>
 </html>
