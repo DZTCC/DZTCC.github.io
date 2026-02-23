@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>数据报表 - 店铺</title>
+    <!-- CSS files -->
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-flags.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-payments.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-vendors.min.css" rel="stylesheet"/>
+    <style>
+      @import url('https://rsms.me/inter/inter.css');
+      :root {
+      	--tblr-primary: #f59f00;
+      	--tblr-primary-rgb: 245, 159, 0;
+      }
+      body {
+      	font-family: Inter, -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+      }
+      /* 导航栏logo和第一个tab之间增加间距 */
+      .navbar-brand {
+        margin-right: 2rem !important;
+      }
+      /* 卡片标题和数字之间增加间距 */
+      .card-body .subheader {
+        margin-bottom: 0.25rem;
+      }
+      /* 说明文本字号调整为和卡片标题一致，并紧贴数字 */
+      .card-body .text-secondary.mt-2 {
+        margin-top: 0.05rem !important;
+        font-size: 0.65rem;
+      }
+      /* 店铺卡片容器 */
+      .shop-container {
+        margin-bottom: 1.5rem;
+      }
+      /* 店铺名称标题 */
+      .shop-title {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: var(--tblr-primary);
+      }
+      /* 左侧卡片列 */
+      .shop-cards-column {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .shop-cards-column .row-cards {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+      .shop-cards-column .col-12 {
+        display: flex;
+        margin-bottom: 0 !important;
+      }
+      .shop-cards-column .col-12:nth-child(1),
+      .shop-cards-column .col-12:nth-child(2) {
+        flex: 1;
+      }
+      .shop-cards-column .col-12:nth-child(3),
+      .shop-cards-column .col-12:nth-child(4) {
+        flex: 1;
+      }
+      .shop-cards-column .col-12:not(:last-child) {
+        margin-bottom: -0.75rem !important;
+      }
+      .shop-cards-column .card {
+        flex: 1.5;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- Navbar -->
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- BEGIN NAVBAR LOGO -->
+          <a href="#" aria-label="INJOY" class="navbar-brand navbar-brand-autodark me-3">
+            <img src="./assets/logo_injoy.svg" width="110" height="32" alt="INJOY" class="navbar-brand-image">
+          </a>
+          <!-- END NAVBAR LOGO -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="overview.html">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-script">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M17 20h-11a3 3 0 0 1 0 -6h11a3 3 0 0 0 0 6h1a3 3 0 0 0 3 -3v-11a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v8" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">总览</span>
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="shops.html">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home-stats">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M19 13v-1h2l-9 -9l-9 9h2v7a2 2 0 0 0 2 2h2.5" />
+                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2" />
+                    <path d="M13 22l3 -3l2 2l4 -4" />
+                    <path d="M19 17h3v3" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">店铺</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="goods.html">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-package">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                    <path d="M12 12l8 -4.5" />
+                    <path d="M12 12l0 9" />
+                    <path d="M12 12l-8 -4.5" />
+                    <path d="M16 5.25l-8 4.5" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">商品</span>
+              </a>
+            </li>
+          </ul>
+          <div class="navbar-nav flex-row order-md-last ms-auto">
+            <div class="nav-item">
+              <div class="text-secondary px-3 py-2">
+                <small>最后更新: 2026-02-23 20:16</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <!-- Page wrapper -->
+      <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+          <div class="container-xl">
+            <div class="row align-items-center">
+              <div class="col">
+                <div class="page-pretitle">Shops</div>
+                <h2 class="page-title">线上渠道店铺数据一览</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Page body -->
+        <div class="page-body">
+          <div class="container-xl">
+            
+            
+            <!-- 店铺1：SG天猫官旗 -->
+            <div class="shop-container">
+              <h3 class="shop-title">SG天猫官旗</h3>
+              <div class="row">
+                <div class="col-lg-3 shop-cards-column">
+                  <div class="row row-cards">
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        
+                        <div class="ribbon ribbon-top bg-yellow">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                            <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+                          </svg>
+                        </div>
+                        
+                        <div class="card-body">
+                          <div class="subheader">月至今成交</div>
+                          <div class="h2 mb-0">¥456.8万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+15.2%</span> 较上月同期
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">当月预估成交</div>
+                          <div class="h2 mb-0">¥1,234.5万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+8.5%</span> 较上月
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">推广费率</div>
+                          <div class="h2 mb-0">15.8%</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">折扣率</div>
+                          <div class="h2 mb-0">8.5%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-9">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex mb-1">
+                        <h3 class="card-title">成交趋势</h3>
+                        <div class="ms-auto">
+                          <div class="dropdown">
+                            <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown">近30天</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <a class="dropdown-item active" href="#" data-period="30">近30天</a>
+                              <a class="dropdown-item" href="#" data-period="365">近1年</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="chart-shop-1" style="min-height: 260px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 店铺2：SG抖音 -->
+            <div class="shop-container">
+              <h3 class="shop-title">SG抖音</h3>
+              <div class="row">
+                <div class="col-lg-3 shop-cards-column">
+                  <div class="row row-cards">
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        
+                        <div class="ribbon ribbon-top bg-yellow">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                            <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+                          </svg>
+                        </div>
+                        
+                        <div class="card-body">
+                          <div class="subheader">月至今成交</div>
+                          <div class="h2 mb-0">¥328.5万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+22.8%</span> 较上月同期
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">当月预估成交</div>
+                          <div class="h2 mb-0">¥892.3万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+18.3%</span> 较上月
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">推广费率</div>
+                          <div class="h2 mb-0">18.2%</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">折扣率</div>
+                          <div class="h2 mb-0">12.3%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-9">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex mb-1">
+                        <h3 class="card-title">成交趋势</h3>
+                        <div class="ms-auto">
+                          <div class="dropdown">
+                            <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown">近30天</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <a class="dropdown-item active" href="#" data-period="30">近30天</a>
+                              <a class="dropdown-item" href="#" data-period="365">近1年</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="chart-shop-2" style="min-height: 260px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 店铺3：SG京东自营 -->
+            <div class="shop-container">
+              <h3 class="shop-title">SG京东自营</h3>
+              <div class="row">
+                <div class="col-lg-3 shop-cards-column">
+                  <div class="row row-cards">
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        
+                        <div class="ribbon ribbon-top bg-yellow">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-1">
+                            <path d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></path>
+                          </svg>
+                        </div>
+                        
+                        <div class="card-body">
+                          <div class="subheader">月至今成交</div>
+                          <div class="h2 mb-0">¥265.2万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+12.5%</span> 较上月同期
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">当月预估成交</div>
+                          <div class="h2 mb-0">¥756.8万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+10.2%</span> 较上月
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">推广费率</div>
+                          <div class="h2 mb-0">14.5%</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">折扣率</div>
+                          <div class="h2 mb-0">9.2%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-9">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex mb-1">
+                        <h3 class="card-title">成交趋势</h3>
+                        <div class="ms-auto">
+                          <div class="dropdown">
+                            <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown">近30天</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <a class="dropdown-item active" href="#" data-period="30">近30天</a>
+                              <a class="dropdown-item" href="#" data-period="365">近1年</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="chart-shop-3" style="min-height: 260px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 店铺4：SG天猫国际 -->
+            <div class="shop-container">
+              <h3 class="shop-title">SG天猫国际</h3>
+              <div class="row">
+                <div class="col-lg-3 shop-cards-column">
+                  <div class="row row-cards">
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        
+                        <div class="card-body">
+                          <div class="subheader">月至今成交</div>
+                          <div class="h2 mb-0">¥198.6万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+28.5%</span> 较上月同期
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">当月预估成交</div>
+                          <div class="h2 mb-0">¥534.2万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+25.3%</span> 较上月
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">推广费率</div>
+                          <div class="h2 mb-0">16.5%</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">折扣率</div>
+                          <div class="h2 mb-0">10.8%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-9">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex mb-1">
+                        <h3 class="card-title">成交趋势</h3>
+                        <div class="ms-auto">
+                          <div class="dropdown">
+                            <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown">近30天</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <a class="dropdown-item active" href="#" data-period="30">近30天</a>
+                              <a class="dropdown-item" href="#" data-period="365">近1年</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="chart-shop-4" style="min-height: 260px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 店铺5：SG小红书 -->
+            <div class="shop-container">
+              <h3 class="shop-title">SG小红书</h3>
+              <div class="row">
+                <div class="col-lg-3 shop-cards-column">
+                  <div class="row row-cards">
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        
+                        <div class="card-body">
+                          <div class="subheader">月至今成交</div>
+                          <div class="h2 mb-0">¥156.3万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+32.1%</span> 较上月同期
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">当月预估成交</div>
+                          <div class="h2 mb-0">¥421.5万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+28.7%</span> 较上月
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">推广费率</div>
+                          <div class="h2 mb-0">22.5%</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">折扣率</div>
+                          <div class="h2 mb-0">15.8%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-9">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex mb-1">
+                        <h3 class="card-title">成交趋势</h3>
+                        <div class="ms-auto">
+                          <div class="dropdown">
+                            <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown">近30天</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <a class="dropdown-item active" href="#" data-period="30">近30天</a>
+                              <a class="dropdown-item" href="#" data-period="365">近1年</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="chart-shop-5" style="min-height: 260px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 店铺6：SG京东POP -->
+            <div class="shop-container">
+              <h3 class="shop-title">SG京东POP</h3>
+              <div class="row">
+                <div class="col-lg-3 shop-cards-column">
+                  <div class="row row-cards">
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        
+                        <div class="card-body">
+                          <div class="subheader">月至今成交</div>
+                          <div class="h2 mb-0">¥142.8万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+15.6%</span> 较上月同期
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">当月预估成交</div>
+                          <div class="h2 mb-0">¥385.2万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+12.4%</span> 较上月
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">推广费率</div>
+                          <div class="h2 mb-0">17.2%</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">折扣率</div>
+                          <div class="h2 mb-0">11.5%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-9">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex mb-1">
+                        <h3 class="card-title">成交趋势</h3>
+                        <div class="ms-auto">
+                          <div class="dropdown">
+                            <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown">近30天</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <a class="dropdown-item active" href="#" data-period="30">近30天</a>
+                              <a class="dropdown-item" href="#" data-period="365">近1年</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="chart-shop-6" style="min-height: 260px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 店铺7：SG拼多多 -->
+            <div class="shop-container">
+              <h3 class="shop-title">SG拼多多</h3>
+              <div class="row">
+                <div class="col-lg-3 shop-cards-column">
+                  <div class="row row-cards">
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        
+                        <div class="card-body">
+                          <div class="subheader">月至今成交</div>
+                          <div class="h2 mb-0">¥125.3万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+18.7%</span> 较上月同期
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">当月预估成交</div>
+                          <div class="h2 mb-0">¥338.5万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+16.5%</span> 较上月
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">推广费率</div>
+                          <div class="h2 mb-0">16.8%</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">折扣率</div>
+                          <div class="h2 mb-0">11.5%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-9">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex mb-1">
+                        <h3 class="card-title">成交趋势</h3>
+                        <div class="ms-auto">
+                          <div class="dropdown">
+                            <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown">近30天</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <a class="dropdown-item active" href="#" data-period="30">近30天</a>
+                              <a class="dropdown-item" href="#" data-period="365">近1年</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="chart-shop-7" style="min-height: 260px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 店铺8：SMX小红书 -->
+            <div class="shop-container">
+              <h3 class="shop-title">SMX小红书</h3>
+              <div class="row">
+                <div class="col-lg-3 shop-cards-column">
+                  <div class="row row-cards">
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        
+                        <div class="card-body">
+                          <div class="subheader">月至今成交</div>
+                          <div class="h2 mb-0">¥98.5万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+35.2%</span> 较上月同期
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">当月预估成交</div>
+                          <div class="h2 mb-0">¥265.8万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+31.5%</span> 较上月
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">推广费率</div>
+                          <div class="h2 mb-0">24.5%</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">折扣率</div>
+                          <div class="h2 mb-0">18.2%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-9">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex mb-1">
+                        <h3 class="card-title">成交趋势</h3>
+                        <div class="ms-auto">
+                          <div class="dropdown">
+                            <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown">近30天</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <a class="dropdown-item active" href="#" data-period="30">近30天</a>
+                              <a class="dropdown-item" href="#" data-period="365">近1年</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="chart-shop-8" style="min-height: 260px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 店铺9：SMX天猫官旗 -->
+            <div class="shop-container">
+              <h3 class="shop-title">SMX天猫官旗</h3>
+              <div class="row">
+                <div class="col-lg-3 shop-cards-column">
+                  <div class="row row-cards">
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        
+                        <div class="card-body">
+                          <div class="subheader">月至今成交</div>
+                          <div class="h2 mb-0">¥85.2万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+22.3%</span> 较上月11同期
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">当月预估成交</div>
+                          <div class="h2 mb-0">¥230.1万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+19.8%</span> 较上月
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">推广费率</div>
+                          <div class="h2 mb-0">19.5%</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">折扣率</div>
+                          <div class="h2 mb-0">13.8%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-9">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex mb-1">
+                        <h3 class="card-title">成交趋势</h3>
+                        <div class="ms-auto">
+                          <div class="dropdown">
+                            <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown">近30天</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <a class="dropdown-item active" href="#" data-period="30">近30天</a>
+                              <a class="dropdown-item" href="#" data-period="365">近1年</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="chart-shop-9" style="min-height: 260px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 店铺10：SMX京东POP -->
+            <div class="shop-container">
+              <h3 class="shop-title">SMX京东POP</h3>
+              <div class="row">
+                <div class="col-lg-3 shop-cards-column">
+                  <div class="row row-cards">
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        
+                        <div class="card-body">
+                          <div class="subheader">月至今成交</div>
+                          <div class="h2 mb-0">¥72.6万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+18.5%</span> 较上月同期
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">当月预估成交</div>
+                          <div class="h2 mb-0">¥196.2万</div>
+                          
+                          <div class="text-secondary mt-2">
+                            <span class="text-green">+15.2%</span> 较上月
+                          </div>
+                          
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">推广费率</div>
+                          <div class="h2 mb-0">20.5%</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-12 mb-3">
+                      <div class="card card-sm">
+                        <div class="card-body">
+                          <div class="subheader">折扣率</div>
+                          <div class="h2 mb-0">14.5%</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-9">
+                  <div class="card">
+                    <div class="card-body">
+                      <div class="d-flex mb-1">
+                        <h3 class="card-title">成交趋势</h3>
+                        <div class="ms-auto">
+                          <div class="dropdown">
+                            <a class="dropdown-toggle text-secondary" href="#" data-bs-toggle="dropdown">近30天</a>
+                            <div class="dropdown-menu dropdown-menu-end">
+                              <a class="dropdown-item active" href="#" data-period="30">近30天</a>
+                              <a class="dropdown-item" href="#" data-period="365">近1年</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div id="chart-shop-10" style="min-height: 260px;"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            
+          </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center">
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item">
+                    Copyright &copy; 2026
+                    <a href="#" class="link-secondary">INJOY</a>.
+                    All rights reserved.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    
+    <!-- Libs JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+      // 从模板注入的数据
+      const shopsData = [{"cards": {"discount_rate": {"value": "8.5%"}, "month_estimate": {"change": "+8.5%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708", "value": "\u00a51,234.5\u4e07"}, "month_to_date": {"change": "+15.2%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708\u540c\u671f", "value": "\u00a5456.8\u4e07"}, "promotion_rate": {"value": "15.8%"}}, "chart_data": {"data_30days": {"current_year": [55270, 73271, 75715, 49975, 54461, 58667, 59118, 33867, 54088, 37099, 69075, 68605, 79135, 35755, 40643, 71112, 78492, 52664, 78423, 36351, 79940, 70241, 78258, 35518, 55184, 47689, 48014, 66109, 45265, 75830], "dates": ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23"], "last_year": [54007, 31578, 51474, 59594, 30899, 65219, 62978, 64271, 35732, 49544, 62948, 62516, 30395, 65830, 67709, 41618, 29003, 54761, 59722, 49362, 34365, 35654, 44969, 66597, 42217, 69605, 49484, 62728, 30422, 44480]}, "data_365days": {"current_year": [1353404, 1181178, 1345251, 1307728, 861347, 1015263, 897325, 819210, 846650, 1182805, 1494097, 1440748], "dates": ["25/2", "25/3", "25/4", "25/5", "25/6", "25/7", "25/8", "25/9", "25/10", "25/11", "25/12", "26/1"], "last_year": [1213239, 1273959, 1207716, 1270903, 937239, 1276367, 1148796, 1279289, 928568, 787757, 1216938, 714781]}}, "has_star": true, "name": "SG\u5929\u732b\u5b98\u65d7"}, {"cards": {"discount_rate": {"value": "12.3%"}, "month_estimate": {"change": "+18.3%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708", "value": "\u00a5892.3\u4e07"}, "month_to_date": {"change": "+22.8%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708\u540c\u671f", "value": "\u00a5328.5\u4e07"}, "promotion_rate": {"value": "18.2%"}}, "chart_data": {"data_30days": {"current_year": [26988, 36743, 54611, 65513, 42593, 66673, 46432, 44333, 34700, 56581, 69480, 66778, 52112, 69094, 46659, 46378, 54314, 32482, 34924, 43805, 65075, 44665, 50563, 40356, 27505, 29966, 63909, 32582, 67450, 50517], "dates": ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23"], "last_year": [26512, 44763, 45095, 33621, 27363, 45335, 31499, 27373, 56524, 57125, 37993, 24969, 56390, 33417, 40982, 33631, 58232, 59329, 45475, 59178, 31458, 59531, 52871, 38791, 44744, 33261, 30316, 42828, 31161, 42790]}, "data_365days": {"current_year": [848375, 1014298, 1024058, 851746, 1008234, 890512, 871184, 1101257, 803146, 960276, 619234, 726047], "dates": ["25/2", "25/3", "25/4", "25/5", "25/6", "25/7", "25/8", "25/9", "25/10", "25/11", "25/12", "26/1"], "last_year": [584929, 829876, 692235, 570305, 685823, 857201, 516580, 622091, 708589, 559517, 749549, 901995]}}, "has_star": true, "name": "SG\u6296\u97f3"}, {"cards": {"discount_rate": {"value": "9.2%"}, "month_estimate": {"change": "+10.2%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708", "value": "\u00a5756.8\u4e07"}, "month_to_date": {"change": "+12.5%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708\u540c\u671f", "value": "\u00a5265.2\u4e07"}, "promotion_rate": {"value": "14.5%"}}, "chart_data": {"data_30days": {"current_year": [32704, 40889, 56981, 45669, 49090, 20392, 34646, 22688, 53973, 50387, 22801, 50986, 46811, 24989, 24921, 23986, 49816, 43119, 28651, 28117, 29174, 23118, 29795, 53678, 32668, 22248, 54695, 25094, 46853, 38251], "dates": ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23"], "last_year": [35694, 31721, 49602, 46223, 38358, 23997, 52619, 49218, 50536, 54470, 22782, 38942, 34973, 49150, 45117, 52186, 39611, 21816, 42343, 42016, 19704, 30496, 20223, 48236, 31299, 40477, 36709, 49617, 18006, 51888]}, "data_365days": {"current_year": [965112, 646819, 945697, 839506, 726088, 823134, 838028, 649437, 722444, 811889, 524692, 879140], "dates": ["25/2", "25/3", "25/4", "25/5", "25/6", "25/7", "25/8", "25/9", "25/10", "25/11", "25/12", "26/1"], "last_year": [868875, 520826, 781450, 478760, 863343, 613154, 655151, 872104, 672940, 756280, 514362, 889598]}}, "has_star": true, "name": "SG\u4eac\u4e1c\u81ea\u8425"}, {"cards": {"discount_rate": {"value": "10.8%"}, "month_estimate": {"change": "+25.3%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708", "value": "\u00a5534.2\u4e07"}, "month_to_date": {"change": "+28.5%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708\u540c\u671f", "value": "\u00a5198.6\u4e07"}, "promotion_rate": {"value": "16.5%"}}, "chart_data": {"data_30days": {"current_year": [35265, 33973, 24758, 37154, 34128, 45817, 21580, 24283, 30877, 15060, 25487, 49445, 33817, 20771, 28475, 32670, 21961, 18716, 21712, 44162, 17857, 40108, 15621, 46647, 32229, 25959, 16580, 31526, 48540, 30466], "dates": ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23"], "last_year": [18482, 23520, 18643, 30910, 15432, 29327, 25646, 32801, 25789, 26054, 39628, 18177, 17007, 27332, 36198, 30951, 25188, 36611, 29731, 39119, 39116, 33755, 39962, 19958, 24828, 30306, 30762, 20033, 30206, 25504]}, "data_365days": {"current_year": [723854, 734327, 411969, 404243, 424057, 736891, 592703, 489751, 689422, 437574, 679071, 608958], "dates": ["25/2", "25/3", "25/4", "25/5", "25/6", "25/7", "25/8", "25/9", "25/10", "25/11", "25/12", "26/1"], "last_year": [580728, 549239, 307042, 643760, 471405, 304367, 455510, 541056, 405547, 513956, 380583, 584592]}}, "has_star": false, "name": "SG\u5929\u732b\u56fd\u9645"}, {"cards": {"discount_rate": {"value": "15.8%"}, "month_estimate": {"change": "+28.7%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708", "value": "\u00a5421.5\u4e07"}, "month_to_date": {"change": "+32.1%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708\u540c\u671f", "value": "\u00a5156.3\u4e07"}, "promotion_rate": {"value": "22.5%"}}, "chart_data": {"data_30days": {"current_year": [32874, 34278, 25936, 39421, 36451, 28490, 34048, 25261, 25157, 12558, 22090, 15405, 31418, 30826, 29361, 29201, 20461, 26978, 20997, 25012, 29837, 20128, 15399, 33750, 12415, 38968, 12841, 38341, 24698, 20210], "dates": ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23"], "last_year": [25256, 19434, 16011, 24108, 25218, 29403, 19995, 21709, 18564, 18287, 31515, 11547, 11338, 29357, 14102, 18584, 10750, 33189, 27626, 11393, 15652, 14861, 28284, 21413, 31299, 18499, 17254, 16482, 20148, 34153]}, "data_365days": {"current_year": [620221, 375106, 559186, 445861, 572348, 522962, 400403, 315533, 456437, 367491, 318820, 619206], "dates": ["25/2", "25/3", "25/4", "25/5", "25/6", "25/7", "25/8", "25/9", "25/10", "25/11", "25/12", "26/1"], "last_year": [365710, 428099, 381377, 268357, 379269, 339823, 428850, 415135, 289394, 372132, 463012, 339090]}}, "has_star": false, "name": "SG\u5c0f\u7ea2\u4e66"}, {"cards": {"discount_rate": {"value": "11.5%"}, "month_estimate": {"change": "+12.4%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708", "value": "\u00a5385.2\u4e07"}, "month_to_date": {"change": "+15.6%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708\u540c\u671f", "value": "\u00a5142.8\u4e07"}, "promotion_rate": {"value": "17.2%"}}, "chart_data": {"data_30days": {"current_year": [31679, 30249, 29777, 25070, 23962, 22112, 31319, 26402, 24628, 23521, 27239, 30297, 32329, 16782, 32705, 26888, 18979, 12387, 18246, 34931, 28279, 13328, 33181, 23107, 20686, 34196, 30755, 26397, 21622, 20725], "dates": ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23"], "last_year": [29578, 18388, 13954, 30009, 22129, 28368, 18038, 11716, 9523, 9257, 22503, 15899, 23100, 17688, 31303, 16760, 27972, 18141, 14483, 17438, 15441, 19207, 29387, 23900, 11124, 26428, 29655, 28575, 29016, 30672]}, "data_365days": {"current_year": [538879, 408080, 331578, 356612, 488330, 304875, 549736, 372555, 370174, 430130, 288092, 502021], "dates": ["25/2", "25/3", "25/4", "25/5", "25/6", "25/7", "25/8", "25/9", "25/10", "25/11", "25/12", "26/1"], "last_year": [469516, 538819, 445515, 522399, 546351, 427174, 463696, 378756, 305716, 299687, 366624, 422495]}}, "has_star": false, "name": "SG\u4eac\u4e1cPOP"}, {"cards": {"discount_rate": {"value": "11.5%"}, "month_estimate": {"change": "+16.5%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708", "value": "\u00a5338.5\u4e07"}, "month_to_date": {"change": "+18.7%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708\u540c\u671f", "value": "\u00a5125.3\u4e07"}, "promotion_rate": {"value": "16.8%"}}, "chart_data": {"data_30days": {"current_year": [14869, 17772, 15881, 15035, 10226, 27902, 29510, 18374, 10023, 16633, 29227, 12698, 9447, 21203, 16249, 26217, 9875, 10374, 22764, 25774, 18874, 20509, 27200, 26261, 19326, 9868, 28501, 25735, 21546, 20457], "dates": ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23"], "last_year": [13905, 15485, 14315, 11871, 21974, 12776, 12147, 22300, 21025, 12369, 12082, 16657, 8319, 14043, 11831, 16005, 14835, 19646, 25316, 27494, 23541, 16670, 24594, 19772, 24172, 25863, 13671, 10342, 17692, 15184]}, "data_365days": {"current_year": [276436, 300074, 340384, 306142, 374871, 403694, 526646, 405105, 540583, 519731, 349633, 281169], "dates": ["25/2", "25/3", "25/4", "25/5", "25/6", "25/7", "25/8", "25/9", "25/10", "25/11", "25/12", "26/1"], "last_year": [301448, 382899, 312915, 468318, 451459, 238083, 347755, 386248, 304366, 371820, 341846, 267283]}}, "has_star": false, "name": "SG\u62fc\u591a\u591a"}, {"cards": {"discount_rate": {"value": "18.2%"}, "month_estimate": {"change": "+31.5%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708", "value": "\u00a5265.8\u4e07"}, "month_to_date": {"change": "+35.2%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708\u540c\u671f", "value": "\u00a598.5\u4e07"}, "promotion_rate": {"value": "24.5%"}}, "chart_data": {"data_30days": {"current_year": [22939, 15978, 16055, 20345, 12112, 7707, 21088, 11085, 13144, 10188, 15538, 10387, 19865, 12812, 9989, 11731, 12525, 23791, 21627, 13812, 7188, 15810, 22142, 15744, 14730, 23548, 9544, 9445, 17322, 17653], "dates": ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23"], "last_year": [9737, 18919, 16429, 8585, 8438, 13707, 10618, 12096, 16824, 11064, 7701, 8963, 14197, 17100, 18684, 15235, 14659, 17841, 7033, 8691, 13891, 11187, 7158, 11309, 19555, 19634, 5504, 12802, 11566, 8456]}, "data_365days": {"current_year": [306276, 293572, 275173, 391637, 402740, 345456, 276976, 351189, 395336, 342564, 264472, 422690], "dates": ["25/2", "25/3", "25/4", "25/5", "25/6", "25/7", "25/8", "25/9", "25/10", "25/11", "25/12", "26/1"], "last_year": [190120, 210215, 261818, 336572, 153877, 172126, 341724, 179469, 302320, 233331, 152490, 234632]}}, "has_star": false, "name": "SMX\u5c0f\u7ea2\u4e66"}, {"cards": {"discount_rate": {"value": "13.8%"}, "month_estimate": {"change": "+19.8%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708", "value": "\u00a5230.1\u4e07"}, "month_to_date": {"change": "+22.3%", "change_color": "green", "desc": "\u8f83\u4e0a\u670811\u540c\u671f", "value": "\u00a585.2\u4e07"}, "promotion_rate": {"value": "19.5%"}}, "chart_data": {"data_30days": {"current_year": [16446, 15877, 9136, 17571, 8822, 14030, 15179, 13418, 8125, 17979, 17189, 16619, 7198, 15271, 8359, 8416, 10468, 21774, 21008, 17436, 14365, 9035, 12643, 14322, 11539, 16937, 11605, 21798, 19602, 14262], "dates": ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23"], "last_year": [15241, 6465, 9223, 17970, 6154, 5462, 8542, 7014, 5465, 14386, 8013, 12597, 8902, 14938, 9372, 14592, 7235, 13250, 13904, 8357, 6828, 8064, 8786, 17563, 15670, 15619, 14237, 6561, 8279, 12854]}, "data_365days": {"current_year": [300143, 284150, 311102, 318833, 297754, 233433, 193667, 240665, 182762, 191531, 287482, 239246], "dates": ["25/2", "25/3", "25/4", "25/5", "25/6", "25/7", "25/8", "25/9", "25/10", "25/11", "25/12", "26/1"], "last_year": [275363, 171185, 191101, 152755, 278516, 307560, 238903, 234069, 325320, 286264, 199263, 205809]}}, "has_star": false, "name": "SMX\u5929\u732b\u5b98\u65d7"}, {"cards": {"discount_rate": {"value": "14.5%"}, "month_estimate": {"change": "+15.2%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708", "value": "\u00a5196.2\u4e07"}, "month_to_date": {"change": "+18.5%", "change_color": "green", "desc": "\u8f83\u4e0a\u6708\u540c\u671f", "value": "\u00a572.6\u4e07"}, "promotion_rate": {"value": "20.5%"}}, "chart_data": {"data_30days": {"current_year": [15591, 6414, 7957, 15332, 14035, 17435, 18693, 19607, 12422, 9285, 19420, 11849, 9293, 17168, 10930, 19036, 9449, 12492, 9712, 18114, 10820, 14514, 7804, 8796, 9723, 10503, 7036, 14940, 14236, 14861], "dates": ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23"], "last_year": [12981, 10602, 6207, 14389, 5395, 10566, 6432, 15340, 6289, 6950, 7811, 9109, 11421, 8133, 10687, 9315, 7022, 4396, 5508, 6392, 4674, 7866, 16608, 16461, 14822, 7782, 10190, 10314, 4258, 13772]}, "data_365days": {"current_year": [333475, 186046, 276280, 157415, 300078, 268096, 182929, 337917, 213431, 311196, 320309, 243525], "dates": ["25/2", "25/3", "25/4", "25/5", "25/6", "25/7", "25/8", "25/9", "25/10", "25/11", "25/12", "26/1"], "last_year": [273791, 133559, 244246, 204113, 251508, 296454, 266621, 210582, 262772, 130795, 263015, 235112]}}, "has_star": false, "name": "SMX\u4eac\u4e1cPOP"}];
+      
+      // 创建图表配置
+      function createChartOptions(data) {
+        return {
+          series: [{
+            name: '今年',
+            data: data.current_year
+          }, {
+            name: '去年',
+            data: data.last_year
+          }],
+          chart: {
+            type: 'line',
+            height: 292,
+            fontFamily: 'inherit',
+            parentHeightOffset: 0,
+            toolbar: {
+              show: false
+            },
+            animations: {
+              enabled: true
+            },
+            zoom: {
+              enabled: false
+            }
+          },
+          colors: ['#f59f00', '#d0d0d0'],
+          stroke: {
+            width: 2,
+            curve: 'smooth'
+          },
+          grid: {
+            strokeDashArray: 4,
+            padding: {
+              top: -20,
+              right: 10,
+              left: 10,
+              bottom: -4
+            },
+            xaxis: {
+              lines: {
+                show: false
+              }
+            }
+          },
+          xaxis: {
+            categories: data.dates,
+            labels: {
+              style: {
+                colors: '#373d3f',
+                fontSize: '11px'
+              },
+              rotate: 0,
+              hideOverlappingLabels: true,
+              showDuplicates: false
+            },
+            tickAmount: 15,
+            axisBorder: {
+              show: true,
+              color: '#e0e0e0'
+            },
+            axisTicks: {
+              show: true
+            }
+          },
+          yaxis: {
+            labels: {
+              style: {
+                colors: '#373d3f',
+                fontSize: '11px'
+              },
+              formatter: function(value) {
+                return (value / 10000).toFixed(0) + '万';
+              }
+            }
+          },
+          legend: {
+            show: false
+          },
+          tooltip: {
+            theme: 'dark',
+            y: {
+              formatter: function(value) {
+                return value.toLocaleString('zh-CN');
+              }
+            }
+          }
+        };
+      }
+      
+      // 存储所有图表实例
+      const charts = {};
+      
+      // 渲染所有图表
+      document.addEventListener('DOMContentLoaded', function() {
+        // 为每个店铺创建图表
+        shopsData.forEach((shop, index) => {
+          const shopIndex = index + 1;
+          
+          // 创建图表
+          charts[shopIndex] = new ApexCharts(
+            document.querySelector(`#chart-shop-${shopIndex}`),
+            createChartOptions(shop.chart_data.data_30days)
+          );
+          charts[shopIndex].render();
+        });
+        
+        // 为所有下拉菜单添加切换事件
+        document.querySelectorAll('.shop-container').forEach((container, index) => {
+          const shopIndex = index + 1;
+          container.querySelectorAll('[data-period]').forEach(item => {
+            item.addEventListener('click', function(e) {
+              e.preventDefault();
+              const period = parseInt(this.getAttribute('data-period'));
+              
+              // 更新active状态
+              container.querySelectorAll('[data-period]').forEach(el => el.classList.remove('active'));
+              this.classList.add('active');
+              
+              // 更新下拉按钮文本
+              const dropdownToggle = this.closest('.dropdown').querySelector('.dropdown-toggle');
+              dropdownToggle.textContent = this.textContent;
+              
+              // 根据period选择数据
+              const data = period === 30 ? shopsData[index].chart_data.data_30days : shopsData[index].chart_data.data_365days;
+              
+              // 更新图表
+              charts[shopIndex].updateOptions({
+                xaxis: {
+                  categories: data.dates,
+                  labels: {
+                    style: {
+                      colors: '#373d3f',
+                      fontSize: '11px'
+                    },
+                    rotate: 0,
+                    hideOverlappingLabels: true,
+                    showDuplicates: false
+                  },
+                  tickAmount: period === 30 ? 15 : undefined,
+                  axisBorder: {
+                    show: true,
+                    color: '#e0e0e0'
+                  },
+                  axisTicks: {
+                    show: true
+                  }
+                }
+              });
+              charts[shopIndex].updateSeries([{
+                name: '今年',
+                data: data.current_year
+              }, {
+                name: '去年',
+                data: data.last_year
+              }]);
+            });
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

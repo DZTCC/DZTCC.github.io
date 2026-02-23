@@ -1,0 +1,519 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>数据报表 - 总览</title>
+    <!-- CSS files -->
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-flags.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-payments.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-vendors.min.css" rel="stylesheet"/>
+    <style>
+      @import url('https://rsms.me/inter/inter.css');
+      :root {
+      	--tblr-primary: #f59f00;
+      	--tblr-primary-rgb: 245, 159, 0;
+      }
+      body {
+      	font-family: Inter, -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+      }
+      /* 导航栏logo和第一个tab之间增加间距 */
+      .navbar-brand {
+        margin-right: 2rem !important;
+      }
+      /* 卡片标题和数字之间增加间距 */
+      .card-body .subheader {
+        margin-bottom: 0.25rem;
+      }
+      /* 说明文本字号调整为和卡片标题一致，并紧贴数字 */
+      .card-body .text-secondary.mt-2 {
+        margin-top: 0.05rem !important;
+        font-size: 0.65rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- Navbar -->
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- BEGIN NAVBAR LOGO -->
+          <a href="#" aria-label="INJOY" class="navbar-brand navbar-brand-autodark me-3">
+            <img src="./assets/logo_injoy.svg" width="110" height="32" alt="INJOY" class="navbar-brand-image">
+          </a>
+          <!-- END NAVBAR LOGO -->
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="overview.html">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-script">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M17 20h-11a3 3 0 0 1 0 -6h11a3 3 0 0 0 0 6h1a3 3 0 0 0 3 -3v-11a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v8" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">总览</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="shops.html">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home-stats">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M19 13v-1h2l-9 -9l-9 9h2v7a2 2 0 0 0 2 2h2.5" />
+                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2" />
+                    <path d="M13 22l3 -3l2 2l4 -4" />
+                    <path d="M19 17h3v3" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">店铺</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="goods.html">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-package">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                    <path d="M12 12l8 -4.5" />
+                    <path d="M12 12l0 9" />
+                    <path d="M12 12l-8 -4.5" />
+                    <path d="M16 5.25l-8 4.5" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">商品</span>
+              </a>
+            </li>
+          </ul>
+          <div class="navbar-nav flex-row order-md-last ms-auto">
+            <div class="nav-item">
+              <div class="text-secondary px-3 py-2">
+                <small>最后更新: 2026-02-23 20:16</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <!-- Page wrapper -->
+      <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+          <div class="container-xl">
+            <div class="row align-items-center">
+              <div class="col">
+                <div class="page-pretitle">Overview</div>
+                <h2 class="page-title">线上渠道核心数据总览</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Page body -->
+        <div class="page-body">
+          <div class="container-xl">
+            <!-- 四个数据卡片 -->
+            <div class="row row-deck row-cards mb-3">
+              <!-- 月至今成交 -->
+              <div class="col-sm-6 col-lg-3">
+                <div class="card card-stacked">
+                  <div class="card-body">
+                    <div class="subheader">月至今成交</div>
+                    <div class="d-flex align-items-baseline">
+                      <div class="h1 mb-0 me-2">¥124.6万</div>
+                      <div class="me-auto">
+                        <span class="text-green d-inline-flex align-items-center lh-1">
+                          12.4%
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon ms-1 icon-2">
+                            
+                            <path d="M3 17l6 -6l4 4l8 -8"></path>
+                            <path d="M14 7l7 0l0 7"></path>
+                            
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="text-secondary mt-2">去年同期值: ¥110.7万</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 当月预估成交 -->
+              <div class="col-sm-6 col-lg-3">
+                <div class="card card-stacked">
+                  <div class="card-body">
+                    <div class="subheader">当月预估成交</div>
+                    <div class="d-flex align-items-baseline">
+                      <div class="h1 mb-0 me-2">¥289.0万</div>
+                      <div class="me-auto">
+                        <span class="text-green d-inline-flex align-items-center lh-1">
+                          8.2%
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon ms-1 icon-2">
+                            
+                            <path d="M3 17l6 -6l4 4l8 -8"></path>
+                            <path d="M14 7l7 0l0 7"></path>
+                            
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="text-secondary mt-2">基于当前趋势预测</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 近30天成交单量 -->
+              <div class="col-sm-6 col-lg-3">
+                <div class="card card-stacked">
+                  <div class="card-body">
+                    <div class="subheader">近30天成交单量</div>
+                    <div class="d-flex align-items-baseline">
+                      <div class="h1 mb-0 me-2">3,542</div>
+                      <div class="me-auto">
+                        <span class="text-green d-inline-flex align-items-center lh-1">
+                          5.2%
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon ms-1 icon-2">
+                            
+                            <path d="M3 17l6 -6l4 4l8 -8"></path>
+                            <path d="M14 7l7 0l0 7"></path>
+                            
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="text-secondary mt-2">较前30天增长</div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 近30天售后单量 -->
+              <div class="col-sm-6 col-lg-3">
+                <div class="card card-stacked">
+                  <div class="card-body">
+                    <div class="subheader">近30天售后单量</div>
+                    <div class="d-flex align-items-baseline">
+                      <div class="h1 mb-0 me-2">127</div>
+                      <div class="me-auto">
+                        <span class="text-red d-inline-flex align-items-center lh-1">
+                          2.3%
+                          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon ms-1 icon-2">
+                            
+                            <path d="M3 7l6 6l4 -4l8 8"></path>
+                            <path d="M14 17l7 0l0 -7"></path>
+                            
+                          </svg>
+                        </span>
+                      </div>
+                    </div>
+                    <div class="text-secondary mt-2">售后率下降，服务质量提升</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            
+            <!-- 图表区域 -->
+            <div class="row row-deck row-cards">
+              <!-- 折线图 - 75% 宽度 -->
+              <div class="col-lg-9">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="d-flex mb-1">
+                      <h3 class="card-title">成交趋势</h3>
+                      <div class="ms-auto">
+                        <div class="dropdown">
+                          <a class="dropdown-toggle text-secondary" id="sales-trend-dropdown" href="#" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" aria-label="选择时间范围">近30天</a>
+                          <div class="dropdown-menu dropdown-menu-end" aria-labelledby="sales-trend-dropdown">
+                            <a class="dropdown-item active" href="#" aria-current="true" data-period="30">近30天</a>
+                            <a class="dropdown-item" href="#" data-period="365">近1年</a>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-auto" style="flex: 1; min-width: 0;">
+                        <div id="chart-sales-trend" style="min-height: 288px;"></div>
+                      </div>
+                      <div class="col-auto" style="width: 85px;">
+                        <div class="divide-y divide-y-fill">
+                          <div class="px-2">
+                            <div class="text-secondary"><span class="status-dot bg-primary"></span> 今年</div>
+                            <div class="h3" id="stat-current-year" style="white-space: nowrap;" data-30d="160.3万" data-365d="1267万">160.3万</div>
+                          </div>
+                          <div class="px-2">
+                            <div class="text-secondary"><span class="status-dot" style="background-color: #d0d0d0;"></span> 去年</div>
+                            <div class="h3" id="stat-last-year" style="white-space: nowrap;" data-30d="129.0万" data-365d="1099万">129.0万</div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- 饼图 - 25% 宽度 -->
+              <div class="col-lg-3">
+                <div class="card">
+                  <div class="card-body">
+                    <h3 class="card-title mb-1">渠道分布</h3>
+                    <div id="chart-channel-distribution"></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center">
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item">
+                    Copyright &copy; 2026
+                    <a href="#" class="link-secondary">INJOY</a>.
+                    All rights reserved.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    
+    <!-- Libs JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+      // 从模板注入的数据
+      const chartData = {
+        salesTrend: {
+          data30Days: {
+            dates: ["1/25", "1/26", "1/27", "1/28", "1/29", "1/30", "1/31", "2/1", "2/2", "2/3", "2/4", "2/5", "2/6", "2/7", "2/8", "2/9", "2/10", "2/11", "2/12", "2/13", "2/14", "2/15", "2/16", "2/17", "2/18", "2/19", "2/20", "2/21", "2/22", "2/23"],
+            currentYear: [50886, 46294, 35305, 72919, 43607, 39025, 46991, 34141, 46959, 62859, 62667, 67660, 56141, 74962, 30907, 31282, 33540, 54513, 77484, 55407, 62932, 35256, 50460, 40928, 66452, 79047, 71129, 63766, 59321, 50237],
+            lastYear: [64950, 26010, 60984, 28124, 33211, 66998, 30607, 35283, 37055, 29182, 32878, 40921, 43503, 38031, 57537, 29299, 31349, 36180, 63011, 55649, 51816, 33398, 28787, 66571, 43750, 46431, 25503, 37082, 66639, 48810]
+          },
+          data365Days: {
+            dates: ["25/2", "25/3", "25/4", "25/5", "25/6", "25/7", "25/8", "25/9", "25/10", "25/11", "25/12", "26/1"],
+            currentYear: [1141585, 1196775, 1160248, 857621, 841298, 961323, 915901, 1089449, 1152614, 1041040, 1148880, 1164292],
+            lastYear: [922673, 947990, 836669, 1045218, 1084750, 825991, 935684, 823884, 864354, 734353, 958732, 1004708]
+          }
+        },
+        channelDistribution: {
+          labels: ["\u5929\u732b", "\u6296\u97f3", "\u4eac\u4e1c", "\u5c0f\u7ea2\u4e66", "\u5176\u4ed6"],
+          values: [35, 25, 20, 15, 5]
+        }
+      };
+      
+      // 图表配置
+      const chartOptions = {
+        series: [{
+          name: '今年',
+          data: chartData.salesTrend.data30Days.currentYear
+        }, {
+          name: '去年',
+          data: chartData.salesTrend.data30Days.lastYear
+        }],
+        chart: {
+          type: 'line',
+          height: 288,
+          fontFamily: 'inherit',
+          parentHeightOffset: 0,
+          toolbar: {
+            show: false
+          },
+          animations: {
+            enabled: true
+          },
+          zoom: {
+            enabled: false
+          }
+        },
+        colors: ['#f59f00', '#d0d0d0'],
+        stroke: {
+          width: 2,
+          curve: 'smooth'
+        },
+        grid: {
+          strokeDashArray: 4,
+          padding: {
+            top: -20,
+            right: -1,
+            left: 10,
+            bottom: -4
+          },
+          xaxis: {
+            lines: {
+              show: false
+            }
+          }
+        },
+        xaxis: {
+          categories: chartData.salesTrend.data30Days.dates,
+          labels: {
+            style: {
+              colors: '#373d3f',
+              fontSize: '11px'
+            },
+            rotate: 0,
+            hideOverlappingLabels: true,
+            showDuplicates: false
+          },
+          tickAmount: 15,
+          axisBorder: {
+            show: true,
+            color: '#e0e0e0'
+          },
+          axisTicks: {
+            show: true
+          }
+        },
+        yaxis: {
+          labels: {
+            style: {
+              colors: '#373d3f',
+              fontSize: '11px'
+            },
+            formatter: function(value) {
+              return (value / 10000).toFixed(0) + '万';}
+          }
+        },
+        legend: {
+          show: false
+        },
+        tooltip: {
+          theme: 'dark',
+          y: {
+            formatter: function(value) {
+              return value.toLocaleString('zh-CN');
+            }
+          }
+        }
+      };
+      
+      // 渲染图表
+      document.addEventListener('DOMContentLoaded', function() {
+        const chart = new ApexCharts(document.querySelector("#chart-sales-trend"), chartOptions);
+        chart.render();
+        
+        // 下拉菜单切换事件
+        document.querySelectorAll('[data-period]').forEach(item => {
+          item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const period = parseInt(this.getAttribute('data-period'));
+            
+            // 更新active状态
+            document.querySelectorAll('[data-period]').forEach(el => el.classList.remove('active'));
+            this.classList.add('active');
+            
+            // 更新下拉按钮文本
+            const dropdownToggle = this.closest('.dropdown').querySelector('.dropdown-toggle');
+            dropdownToggle.textContent = this.textContent;
+            
+            // 根据period选择数据
+            const data = period === 30 ? chartData.salesTrend.data30Days : chartData.salesTrend.data365Days;
+            
+            // 更新统计数字
+            const currentYearEl = document.getElementById('stat-current-year');
+            const lastYearEl = document.getElementById('stat-last-year');
+            if (period === 30) {
+              currentYearEl.textContent = currentYearEl.getAttribute('data-30d');
+              lastYearEl.textContent = lastYearEl.getAttribute('data-30d');
+            } else {
+              currentYearEl.textContent = currentYearEl.getAttribute('data-365d');
+              lastYearEl.textContent = lastYearEl.getAttribute('data-365d');
+            }
+            
+            // 更新图表数据
+            chart.updateOptions({
+              xaxis: {
+                categories: data.dates,
+                labels: {
+                  style: {
+                    colors: '#373d3f',
+                    fontSize: '11px'
+                  },
+                  rotate: 0,
+                  hideOverlappingLabels: true,
+                  showDuplicates: false
+                },
+                tickAmount: period === 30 ? 15 : undefined,
+                axisBorder: {
+                  show: true,
+                  color: '#e0e0e0'
+                },
+                axisTicks: {
+                  show: true
+                }
+              }
+            });
+            chart.updateSeries([{
+              name: '今年',
+              data: data.currentYear
+            }, {
+              name: '去年',
+              data: data.lastYear
+            }]);
+          });
+        });
+        
+        // 渲染饼图
+        window.ApexCharts && (new ApexCharts(document.getElementById('chart-channel-distribution'), {
+          chart: {
+            type: "donut",
+            fontFamily: 'inherit',
+            height: 320,
+            sparkline: {
+              enabled: false
+            },
+            animations: {
+              enabled: false
+            },
+            offsetY: 15
+          },
+          series: chartData.channelDistribution.values,
+          labels: chartData.channelDistribution.labels,
+          tooltip: {
+            theme: 'dark'
+          },
+          grid: {
+            strokeDashArray: 4,
+          },
+          colors: ['#f59f00', '#fdb44d', '#fec980', '#fedeb3', '#d0d0d0'],
+          plotOptions: {
+            pie: {
+              donut: {
+                size: '65%'
+              }
+            }
+          },
+          dataLabels: {
+            enabled: false
+          },
+          legend: {
+            show: true,
+            position: 'bottom',
+            offsetY: -15,
+            markers: {
+              width: 10,
+              height: 10,
+              radius: 100,
+            },
+            itemMargin: {
+              horizontal: 8,
+              vertical: 4
+            },
+          },
+          tooltip: {
+            fillSeriesColor: false
+          },
+        })).render();
+      });
+    </script>
+  </body>
+</html>

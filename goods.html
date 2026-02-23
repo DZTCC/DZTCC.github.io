@@ -1,0 +1,481 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"/>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"/>
+    <title>数据报表 - 商品</title>
+    <!-- CSS files -->
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-flags.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-payments.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/css/tabler-vendors.min.css" rel="stylesheet"/>
+    <style>
+      @import url('https://rsms.me/inter/inter.css');
+      :root {
+      	--tblr-primary: #f59f00;
+      	--tblr-primary-rgb: 245, 159, 0;
+      }
+      body {
+      	font-family: Inter, -apple-system, BlinkMacSystemFont, San Francisco, Segoe UI, Roboto, Helvetica Neue, sans-serif;
+      }
+      /* 导航栏logo和第一个tab之间增加间距 */
+      .navbar-brand {
+        margin-right: 2rem !important;
+      }
+      /* 商品图片样式 */
+      .product-img {
+        width: 48px;
+        height: 48px;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+      /* 商品名称列 */
+      .product-name-cell {
+        min-width: 160px;
+        padding-right: 0.5rem !important;
+      }
+      /* 数据列样式 */
+      .data-cell {
+        min-width: 50px;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+      }
+      /* 数据单元格内容 */
+      .data-content {
+        display: inline-block;
+        text-align: left;
+        line-height: 1.2;
+      }
+      /* 小字占比样式 */
+      .ratio-text {
+        font-size: 0.7rem;
+        color: #6c757d;
+        margin-top: 0.1rem;
+      }
+      /* 表格排序图标 */
+      .sortable {
+        cursor: pointer;
+        user-select: none;
+      }
+      .sortable:hover {
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+      .sort-icon {
+        opacity: 0.3;
+        margin-left: 0.25rem;
+      }
+      .sortable.asc .sort-icon,
+      .sortable.desc .sort-icon {
+        opacity: 1;
+      }
+      /* 商品名列（最重要，给最大空间） */
+      th.product-name-cell {
+        width: 18%;
+      }
+      /* 平台数据列 */
+      th[data-column="tmall"] {
+        width: 8%;
+      }
+
+      th[data-column="douyin"] {
+        width: 8%;
+      }
+
+      th[data-column="jd"] {
+        width: 8%;
+      }
+
+      th[data-column="xiaohongshu"] {
+        width: 8%;
+      }
+
+      th[data-column="others"] {
+        width: 8%;
+      }
+
+      /* 汇总与库存 */
+      th[data-column="total"] {
+        width: 8%;
+      }
+
+      th[data-column="inventory"] {
+        width: 6%;
+      }
+
+      /* 运营指标 */
+      th[data-column="turnover_days"] {
+        width: 6%;
+      }
+
+      th[data-column="return"] {
+        width: 6%;
+      }
+
+      th[data-column="shelf_ratio"] {
+        width: 6%;
+      }
+
+      th[data-column="content_ratio"] {
+        width: 6%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <!-- Navbar -->
+      <header class="navbar navbar-expand-md d-print-none">
+        <div class="container-xl">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu" aria-controls="navbar-menu" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <!-- BEGIN NAVBAR LOGO -->
+          <a href="#" aria-label="INJOY" class="navbar-brand navbar-brand-autodark me-3">
+            <img src="./assets/logo_injoy.svg" width="110" height="32" alt="INJOY" class="navbar-brand-image">
+          </a>
+          <!-- END NAVBAR LOGO -->
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link" href="overview.html">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-script">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M17 20h-11a3 3 0 0 1 0 -6h11a3 3 0 0 0 0 6h1a3 3 0 0 0 3 -3v-11a2 2 0 0 0 -2 -2h-10a2 2 0 0 0 -2 2v8" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">总览</span>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="shops.html">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-home-stats">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M19 13v-1h2l-9 -9l-9 9h2v7a2 2 0 0 0 2 2h2.5" />
+                    <path d="M9 21v-6a2 2 0 0 1 2 -2h2a2 2 0 0 1 2 2" />
+                    <path d="M13 22l3 -3l2 2l4 -4" />
+                    <path d="M19 17h3v3" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">店铺</span>
+              </a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="goods.html">
+                <span class="nav-link-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon icon-tabler icons-tabler-outline icon-tabler-package">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M12 3l8 4.5l0 9l-8 4.5l-8 -4.5l0 -9l8 -4.5" />
+                    <path d="M12 12l8 -4.5" />
+                    <path d="M12 12l0 9" />
+                    <path d="M12 12l-8 -4.5" />
+                    <path d="M16 5.25l-8 4.5" />
+                  </svg>
+                </span>
+                <span class="nav-link-title">商品</span>
+              </a>
+            </li>
+          </ul>
+          <div class="navbar-nav flex-row order-md-last ms-auto">
+            <div class="nav-item">
+              <div class="text-secondary px-3 py-2">
+                <small>最后更新: 2026-02-23 20:16</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+      
+      <!-- Page wrapper -->
+      <div class="page-wrapper">
+        <!-- Page header -->
+        <div class="page-header d-print-none">
+          <div class="container-xl">
+            <div class="row align-items-center">
+              <div class="col">
+                <div class="page-pretitle">Goods</div>
+                <h2 class="page-title">线上渠道商品数据一览</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Page body -->
+        <div class="page-body">
+          <div class="container-xl">
+            <div class="card">
+              <div class="card-header">
+                <ul class="nav nav-tabs card-header-tabs flex-row-reverse" data-bs-toggle="tabs">
+                  <li class="nav-item">
+                    <a href="#" class="nav-link active" data-mode="quantity">
+                      件数
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="#" class="nav-link" data-mode="amount">
+                      金额
+                    </a>
+                  </li>
+                  <li class="nav-item me-auto">
+                    <h3 class="card-title mb-0" style="margin-top: 4px; margin-left: 10px;">SG商品成交、库存及售后数据 (近30天)</h3>
+                  </li>
+                </ul>
+              </div>
+              <div class="table-responsive">
+                <table class="table table-vcenter card-table" id="goods-table">
+                  <thead>
+                    <tr>
+                      <th class="product-name-cell">商品</th>
+                      <th class="data-cell sortable" data-column="tmall">
+                        天猫
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon sort-icon">
+                          <path d="M6 15l6 -6l6 6"></path>
+                        </svg>
+                      </th>
+                      <th class="data-cell sortable" data-column="douyin">
+                        抖音
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon sort-icon">
+                          <path d="M6 15l6 -6l6 6"></path>
+                        </svg>
+                      </th>
+                      <th class="data-cell sortable" data-column="jd">
+                        京东
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon sort-icon">
+                          <path d="M6 15l6 -6l6 6"></path>
+                        </svg>
+                      </th>
+                      <th class="data-cell sortable" data-column="xiaohongshu">
+                        小红书
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon sort-icon">
+                          <path d="M6 15l6 -6l6 6"></path>
+                        </svg>
+                      </th>
+                      <th class="data-cell sortable" data-column="others">
+                        其他
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon sort-icon">
+                          <path d="M6 15l6 -6l6 6"></path>
+                        </svg>
+                      </th>
+                      <th class="data-cell sortable" data-column="total">
+                        合计
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon sort-icon">
+                          <path d="M6 15l6 -6l6 6"></path>
+                        </svg>
+                      </th>
+                      <th class="data-cell sortable" data-column="inventory">
+                        总库存
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon sort-icon">
+                          <path d="M6 15l6 -6l6 6"></path>
+                        </svg>
+                      </th>
+                      <th class="data-cell sortable" data-column="turnover_days">
+                        周转
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon sort-icon">
+                          <path d="M6 15l6 -6l6 6"></path>
+                        </svg>
+                      </th>
+                      <th class="data-cell sortable" data-column="return">
+                        退货
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon sort-icon">
+                          <path d="M6 15l6 -6l6 6"></path>
+                        </svg>
+                      </th>
+                      <th class="data-cell sortable" data-column="shelf_ratio">
+                        货架
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon sort-icon">
+                          <path d="M6 15l6 -6l6 6"></path>
+                        </svg>
+                      </th>
+                      <th class="data-cell sortable" data-column="content_ratio">
+                        内容
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon sort-icon">
+                          <path d="M6 15l6 -6l6 6"></path>
+                        </svg>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="table-body">
+                    <!-- 数据将通过JavaScript动态填充 -->
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Footer -->
+        <footer class="footer footer-transparent d-print-none">
+          <div class="container-xl">
+            <div class="row text-center align-items-center">
+              <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                <ul class="list-inline list-inline-dots mb-0">
+                  <li class="list-inline-item">
+                    Copyright &copy; 2026
+                    <a href="#" class="link-secondary">INJOY</a>.
+                    All rights reserved.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </div>
+    
+    <!-- Libs JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@latest/dist/js/tabler.min.js"></script>
+    <script>
+      // 商品数据
+      const productsData = [{"amount": {"content_ratio": 54.2, "douyin": 234000, "inventory": 320000, "jd": 89000, "others": 42000, "return": 8200, "shelf_ratio": 45.8, "tmall": 125000, "total": 546000, "turnover_days": 35, "xiaohongshu": 56000}, "image": "./assets/img_sg_sku_48px/\u4e03\u53ea\u5c0f\u7f8a \u5305\u88c5.jpg", "name": "\u4e03\u53ea\u5c0f\u7f8a", "quantity": {"content_ratio": 54.2, "douyin": 2340, "inventory": 3200, "jd": 890, "others": 420, "return": 82, "shelf_ratio": 45.8, "tmall": 1250, "total": 5460, "turnover_days": 35, "xiaohongshu": 560}}, {"amount": {"content_ratio": 51.8, "douyin": 189000, "inventory": 280000, "jd": 112000, "others": 38000, "return": 7200, "shelf_ratio": 48.2, "tmall": 98000, "total": 482000, "turnover_days": 42, "xiaohongshu": 45000}, "image": "./assets/img_sg_sku_48px/\u4e09\u53ea\u5c0f\u732a \u5305\u88c5.jpg", "name": "\u4e09\u53ea\u5c0f\u732a", "quantity": {"content_ratio": 51.8, "douyin": 1890, "inventory": 2800, "jd": 1120, "others": 380, "return": 72, "shelf_ratio": 48.2, "tmall": 980, "total": 4820, "turnover_days": 42, "xiaohongshu": 450}}];
+      
+      let currentMode = 'quantity'; // 'quantity' or 'amount'
+      let currentSort = { column: null, direction: null };
+      
+      // 渲染表格
+      function renderTable(data, mode) {
+        const tbody = document.getElementById('table-body');
+        tbody.innerHTML = '';
+        
+        data.forEach((product, index) => {
+          const modeData = product[mode];
+          const total = modeData.total;
+          
+          const row = document.createElement('tr');
+          row.innerHTML = `
+            <td class="product-name-cell">
+              <div class="d-flex align-items-center">
+                <img src="${product.image}" alt="${product.name}" class="product-img me-2">
+                <div>${product.name}</div>
+              </div>
+            </td>
+            <td class="data-cell">
+              <div class="data-content">
+                <div>${formatNumber(modeData.tmall, mode)}</div>
+                <div class="ratio-text">${((modeData.tmall / total) * 100).toFixed(1)}%</div>
+              </div>
+            </td>
+            <td class="data-cell">
+              <div class="data-content">
+                <div>${formatNumber(modeData.douyin, mode)}</div>
+                <div class="ratio-text">${((modeData.douyin / total) * 100).toFixed(1)}%</div>
+              </div>
+            </td>
+            <td class="data-cell">
+              <div class="data-content">
+                <div>${formatNumber(modeData.jd, mode)}</div>
+                <div class="ratio-text">${((modeData.jd / total) * 100).toFixed(1)}%</div>
+              </div>
+            </td>
+            <td class="data-cell">
+              <div class="data-content">
+                <div>${formatNumber(modeData.xiaohongshu, mode)}</div>
+                <div class="ratio-text">${((modeData.xiaohongshu / total) * 100).toFixed(1)}%</div>
+              </div>
+            </td>
+            <td class="data-cell">
+              <div class="data-content">
+                <div>${formatNumber(modeData.others, mode)}</div>
+                <div class="ratio-text">${((modeData.others / total) * 100).toFixed(1)}%</div>
+              </div>
+            </td>
+            <td class="data-cell"><strong>${formatNumber(total, mode)}</strong></td>
+            <td class="data-cell">${formatInventory(modeData.inventory, mode)}</td>
+            <td class="data-cell">${modeData.turnover_days}天</td>
+            <td class="data-cell">
+              <div class="data-content">
+                <div>${formatNumber(modeData.return, mode)}</div>
+                <div class="ratio-text">${((modeData.return / total) * 100).toFixed(1)}%</div>
+              </div>
+            </td>
+            <td class="data-cell">${modeData.shelf_ratio}%</td>
+            <td class="data-cell">${modeData.content_ratio}%</td>
+          `;
+          tbody.appendChild(row);
+        });
+      }
+      
+      // 格式化数字
+      function formatNumber(value, mode) {
+        if (mode === 'amount') {
+          return '¥' + value.toLocaleString('zh-CN');
+        }
+        return value.toLocaleString('zh-CN');
+      }
+      
+      // 格式化库存（金额模式显示万元）
+      function formatInventory(value, mode) {
+        if (mode === 'amount') {
+          return '¥' + Math.round(value / 10000) + '万';
+        }
+        return value.toLocaleString('zh-CN');
+      }
+      
+      // 排序功能
+      function sortTable(column) {
+        let direction = 'asc';
+        
+        if (currentSort.column === column) {
+          if (currentSort.direction === 'asc') {
+            direction = 'desc';
+          } else if (currentSort.direction === 'desc') {
+            direction = null;
+          }
+        }
+        
+        // 更新排序状态
+        currentSort = { column, direction };
+        
+        // 更新UI
+        document.querySelectorAll('.sortable').forEach(th => {
+          th.classList.remove('asc', 'desc');
+        });
+        
+        if (direction) {
+          const th = document.querySelector(`[data-column="${column}"]`);
+          th.classList.add(direction);
+        }
+        
+        // 排序数据
+        let sortedData = [...productsData];
+        if (direction) {
+          sortedData.sort((a, b) => {
+            const aVal = a[currentMode][column];
+            const bVal = b[currentMode][column];
+            return direction === 'asc' ? aVal - bVal : bVal - aVal;
+          });
+        }
+        
+        renderTable(sortedData, currentMode);
+      }
+      
+      // 初始化
+      document.addEventListener('DOMContentLoaded', function() {
+        renderTable(productsData, currentMode);
+        
+        // 维度切换
+        document.querySelectorAll('[data-mode]').forEach(item => {
+          item.addEventListener('click', function(e) {
+            e.preventDefault();
+            const mode = this.getAttribute('data-mode');
+            currentMode = mode;
+            
+            // 更新active状态
+            document.querySelectorAll('[data-mode]').forEach(el => el.classList.remove('active'));
+            this.classList.add('active');
+            
+            // 重新渲染表格
+            renderTable(productsData, currentMode);
+          });
+        });
+        
+        // 排序事件
+        document.querySelectorAll('.sortable').forEach(th => {
+          th.addEventListener('click', function() {
+            const column = this.getAttribute('data-column');
+            sortTable(column);
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
